@@ -5,6 +5,9 @@ import router from './router'
 import store from './store'
 import Nav from './components/NavFloor.vue'
 import Lay from '@/components/layout.vue'
+// import './src/assets/icons/svg';
+
+
 
 Vue.config.productionTip = false
 Vue.component('Nav',Nav)

@@ -14,7 +14,6 @@ const routes: Array<RouteConfig> = [
     path: '/',
     name: 'index',
     redirect: '/index'
-    // component: index
   },
   {
     path: '/index',

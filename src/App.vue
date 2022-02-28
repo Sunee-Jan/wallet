@@ -17,6 +17,7 @@ export default {
   box-sizing: border-box;
 }
 a{
+  color: #3a3a3a;
   text-decoration: none;
 }
 html{

@@ -61,7 +61,7 @@ name:'NavFloor',
     }
     }
     .selected{
-      color: skyblue;
+      color: pink;
     }
     }
 </style>

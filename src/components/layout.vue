@@ -13,6 +13,10 @@ name:'Lay'
 
 <style scoped lang="scss">
 .wrapper {
-    border:1px solid
+    border:1px solid;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 </style>

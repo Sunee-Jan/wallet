@@ -1,68 +1,67 @@
 <template>
   <div id="navbar">
-      <router-link to="/" class="'item'">
-      <svg>
-        <use xlink:href='#list'/>
-      </svg>
+      <router-link to="/" active-class='selected' class='aside'>
+      <Icon name="#list" svg='nav'/>
       明细
       </router-link> 
-      <router-link to="/chart">
-      <svg>
-        <use xlink:href='#analysis'/>
-      </svg>
+      <router-link to="/chart" active-class='selected' class='aside'>
+      <Icon name="#analysis" svg='nav'/>
       图表
       </router-link>     
       <router-link to="/keepAccount" class='item'>
-      <svg>
-        <use xlink:href='#add'/>
-      </svg>
+      <Icon name="#add" svg='navMid'/>
       记账
       </router-link>    
-      <router-link to="/mood">
-      <svg>
-        <use xlink:href='#coffee'/>
-      </svg>
+      <router-link to="/mood" active-class='selected' class='aside'>
+      <Icon name="#coffee" svg='nav'/>
       心情
       </router-link>    
-      <router-link to="/userHome">
-      <svg>
-        <use xlink:href='#mine'/>
-      </svg>
+      <router-link to="/userHome" active-class='selected' class='aside'>
+      <Icon name="#mine" svg='nav'/>
       我的
       </router-link> 
   </div>
 </template>
 
 <script>
-import '@/assets/icons/list.svg'
-import '@/assets/icons/analysis.svg'
-import '@/assets/icons/coffee.svg'
-import '@/assets/icons/mine.svg'
-import '@/assets/icons/add.svg'
-// console.log(x);
 export default {
-name:'NavFloor'
+name:'NavFloor',
 }
 </script>
 
 <style scoped lang="scss">
 #navbar{
-      border: 1px solid green;
+      border-top: transparent;
+      box-shadow: 0 0 1px rgba(0, 0, 0, 0.25);
       height: 6.5rem;
-      font-size: 1.4rem;
-      line-height: 9rem;
+      font-size: 1.2rem;
+      // line-height: 2rem;
       display: flex;
       justify-content: space-around;
-     > a {
-          border: 1px solid pink;
+      .aside{
+      margin-top:0.5rem;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      .nav{
+      width: 3rem;
+      height: 3rem;     
+    }
       }
     > .item{
       transform: translateY(-50%);
-      // width: 5rem;
-      // height: 5rem;
-      // border-radius: 50%;
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      line-height: 2rem;
       text-align: center;
-      line-height: 13rem;
+     .navMid{
+      width: 4rem;
+      height: 4rem;
+    }
+    }
+    .selected{
+      color: skyblue;
     }
     }
 </style>

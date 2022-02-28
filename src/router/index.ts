@@ -11,11 +11,6 @@ Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/',
-    name: 'index',
-    component: index
-  },
-  {
     path: '/chart',
     name: 'chart',
     component: chart
@@ -38,6 +33,11 @@ const routes: Array<RouteConfig> = [
     path: '/userHome',
     name: 'userHome',
     component: userHome
+  },
+  {
+    path: '/',
+    name: 'index',
+    component: index
   },
   {
     path: '/*',

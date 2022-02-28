@@ -3,7 +3,6 @@
   <lay>
     <p> 我是图标分析页面</p>
   </lay>
- 
   </div>
 </template>
 

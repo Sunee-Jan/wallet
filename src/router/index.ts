@@ -10,6 +10,17 @@ import page404 from '../views/pages/404.vue'
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
+    {
+    path: '/',
+    name: 'index',
+    redirect: '/index'
+    // component: index
+  },
+  {
+    path: '/index',
+    name: 'list',
+    component: index
+  },
   {
     path: '/chart',
     name: 'chart',
@@ -33,11 +44,6 @@ const routes: Array<RouteConfig> = [
     path: '/userHome',
     name: 'userHome',
     component: userHome
-  },
-  {
-    path: '/',
-    name: 'index',
-    component: index
   },
   {
     path: '/*',

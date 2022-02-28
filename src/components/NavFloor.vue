@@ -1,6 +1,6 @@
 <template>
   <div id="navbar">
-      <router-link to="/" active-class='selected' class='aside'>
+      <router-link to="/index" active-class='selected' class='aside'>
       <Icon name="#list" svg='nav'/>
       明细
       </router-link> 
@@ -10,7 +10,7 @@
       </router-link>     
       <router-link to="/keepAccount" class='item'>
       <Icon name="#add" svg='navMid'/>
-      记账
+      记一笔
       </router-link>    
       <router-link to="/mood" active-class='selected' class='aside'>
       <Icon name="#coffee" svg='nav'/>

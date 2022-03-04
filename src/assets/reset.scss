@@ -1,0 +1,26 @@
+* {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+  }
+  * ::after,
+  * ::before {
+    box-sizing: border-box;
+  }
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  a{
+    text-decoration: none;
+    color: inherit;
+  }
+  ul, ol{
+    list-style: none;
+  }
+  :focus{
+    outline: none;
+  }
+  input,
+  button {
+    font-family: inherit;
+  }

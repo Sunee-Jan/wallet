@@ -30,12 +30,14 @@ name:'NavFloor',
 </script>
 
 <style scoped lang="scss">
+@import '~@/assets/reset.scss';
+@import '~@/assets/helper.scss';
 #navbar{
       border-top: transparent;
       box-shadow: 0 0 1px rgba(0, 0, 0, 0.25);
-      height: 6.5rem;
+      height: 8vh;
+      // height: 6rem;
       font-size: 1.2rem;
-      // line-height: 2rem;
       display: flex;
       justify-content: space-around;
       .aside{
@@ -43,25 +45,28 @@ name:'NavFloor',
       display: flex;
       flex-direction: column;
       text-align: center;
+      color:#3d1a18 ;
       .nav{
-      width: 3rem;
-      height: 3rem;     
+      width: 2.5rem;
+      height: 2.5rem;     
     }
       }
     > .item{
       transform: translateY(-50%);
-      width: 4rem;
-      height: 4rem;
+      background-color: #f5f5f5;
+      width: 5rem;
+      height: 5rem;
       border-radius: 50%;
+      box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
       line-height: 2rem;
       text-align: center;
      .navMid{
-      width: 4rem;
-      height: 4rem;
+      width: 5rem;
+      height: 5rem;
     }
     }
     .selected{
-      color: pink;
+      color: $main-color;
     }
     }
 </style>

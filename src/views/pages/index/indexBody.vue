@@ -1,19 +1,76 @@
 <template>
   <ul class="list">
-        <li>
-          <h6><span>06月02日</span><span>星期三</span><span>支出：34</span></h6>
-          <p><Icon name="#list" svg='nav'/><span class="detail"> 早餐</span><span class="pay">-29</span></p>
+        <li v-for="date in dates" :key="date.id">
+          <h6>
+            <span>{{date.day}}</span>
+            <span>星期{{date.week}}</span>
+            <p>
+              <span v-show="date.income.length">收入：{{Earn(date.id)}}</span>
+              <span v-show="date.pays.length">支出：{{spend(date.id)}}</span>
+            </p>
+          </h6>
+          <p v-for="list in date.pays" :key="list.id">
+            <Icon :name="list.icon" svg='nav'/>
+            <span class="detail">{{list.kind}}</span>
+            <span class="pay">{{list.pay}}</span>
+          </p>
+          <p v-for="item in date.income" :key="item.id">
+            <Icon :name="item.icon" svg='nav'/>
+            <span class="detail">{{item.kind}}</span>
+            <span class="pay">{{item.income}}</span>
+          </p>
+          
         </li>
-        <li>
-          <h6><span>06月01日</span><span>星期二</span><span>支出：34</span></h6>
-          <p><Icon name="#mine" svg='nav'/><span class="detail">早餐</span><span class="pay">-2</span></p>
-       </li>
     </ul>
 </template>
 
-<script>
+<script lang="typescript">
 export default {
-name:"IndexBody"
+name:"IndexBody",
+data(){
+  return{
+    dates:[
+    {id:'001',day:'06月01日',week:'三',spend:'22', 
+        pays:[{id:'579',icon:'#list',kind:'早餐',pay:-19},
+            {id:'112',icon:'#list',kind:'早餐',pay:-21},
+            {id:'600',icon:'#list',kind:'早餐',pay:-10}],
+      income:[{id:'111',icon:'#list',kind:'工资',income:11000},
+              {id:'113',icon:'#list',kind:'副业',income:5000}]
+    },
+    {id:'002',day:'06月01日',week:'三',spend:'22',
+      pays:[{id:'102',icon:'#list',kind:'早餐',pay:-18}],
+      income:[]
+    }
+    ],
+  }
+},
+methods:{
+  spend(id){
+    for(let i=0;i<this.dates.length;i++){
+        if(this.dates[i].id===id){
+          let sum =0
+          for(let j=0;j<this.dates[i].pays.length;j++){
+            sum += this.dates[i].pays[j].pay
+          }
+           return sum
+        }
+    }
+  },
+  Earn(id){
+    for(let i=0;i<this.dates.length;i++){
+        if(this.dates[i].id===id){
+          let sum =0
+          for(let j=0;j<this.dates[i].income.length;j++){
+            sum += this.dates[i].income[j].income
+          }
+           return sum
+        }
+    }
+  }
+},
+mounted(){
+
+}
 }
 </script>
 
@@ -34,6 +91,8 @@ name:"IndexBody"
     height: 4vh;
     line-height: 4vh;
     font-family: $font-hei;
+    font-weight: 400;
+
     >span:nth-child(1){
       text-align: left;
       flex-grow: 1;
@@ -42,11 +101,15 @@ name:"IndexBody"
       text-align: left;
       flex-grow: 1;
     }
-    >span:nth-child(3){
+    >p{
       text-align: right;
       flex-grow: 16;
+      >span{
+        display: block;
+        float: right;margin-left: 10px;
+      }
     }
-  }
+   }
   >p{
     display: flex;
     height: 6rem;

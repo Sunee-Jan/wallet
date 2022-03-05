@@ -1,15 +1,15 @@
 <template>
   <lay>
-    <indexTop/>
+    <IndexTop/>
     <IndexBody/>
   </lay>
 </template>
 
 <script>
 import IndexBody from './indexBody.vue'
-import indexTop from './indexTop.vue'
+import IndexTop from './indexTop.vue'
 export default {
-  components: { indexTop, IndexBody },
+  components: { IndexTop, IndexBody },
 name:'UserList'
 }
 </script>

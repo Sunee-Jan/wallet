@@ -5,21 +5,15 @@
             <span>{{date.day}}</span>
             <span>星期{{date.week}}</span>
             <p>
-              <span v-show="date.income.length">收入：{{Earn(date.id)}}</span>
-              <span v-show="date.pays.length">支出：{{spend(date.id)}}</span>
+              <span>收入：{{Earn(date.id)}}</span>
+              <span>支出：{{spend(date.id)}}</span>
             </p>
           </h6>
-          <p v-for="list in date.pays" :key="list.id">
-            <Icon :name="list.icon" svg='nav'/>
-            <span class="detail">{{list.kind}}</span>
-            <span class="pay">{{list.pay}}</span>
-          </p>
-          <p v-for="item in date.income" :key="item.id">
+          <p v-for="item in date.items" :key="item.id">
             <Icon :name="item.icon" svg='nav'/>
             <span class="detail">{{item.kind}}</span>
-            <span class="pay">{{item.income}}</span>
-          </p>
-          
+            <span class="pay">{{item.amount}}</span>
+          </p>          
         </li>
     </ul>
 </template>
@@ -29,39 +23,40 @@ export default {
 name:"IndexBody",
 data(){
   return{
-    dates:[
-    {id:'001',day:'06月01日',week:'三',spend:'22', 
-        pays:[{id:'579',icon:'#list',kind:'早餐',pay:-19},
-            {id:'112',icon:'#list',kind:'早餐',pay:-21},
-            {id:'600',icon:'#list',kind:'早餐',pay:-10}],
-      income:[{id:'111',icon:'#list',kind:'工资',income:11000},
-              {id:'113',icon:'#list',kind:'副业',income:5000}]
-    },
-    {id:'002',day:'06月01日',week:'三',spend:'22',
-      pays:[{id:'102',icon:'#list',kind:'早餐',pay:-18}],
-      income:[]
-    }
+     dates:[
+    {id:'001',day:'06月01日',week:'三', items:[
+      {id:'579',icon:'#list',kind:'早餐',amount:-19},
+      {id:'112',icon:'#list',kind:'工资',amount:22000},
+      {id:'115',icon:'#list',kind:'午餐',amount:-21},
+      {id:'116',icon:'#list',kind:'兼职',amount:350},
+      {id:'117',icon:'#list',kind:'必胜客',amount:-300}
+      ]},
+    {id:'002',day:'06月01日',week:'四',items:[
+      {id:'102',icon:'#list',kind:'早餐',amount:-18}
+      ]}
     ],
   }
 },
 methods:{
-  spend(id){
+  Earn(id){
     for(let i=0;i<this.dates.length;i++){
         if(this.dates[i].id===id){
           let sum =0
-          for(let j=0;j<this.dates[i].pays.length;j++){
-            sum += this.dates[i].pays[j].pay
+          for(let j=0;j<this.dates[i].items.length;j++){
+            if(this.dates[i].items[j].amount>0)
+            sum += this.dates[i].items[j].amount
           }
            return sum
         }
     }
   },
-  Earn(id){
+  spend(id){
     for(let i=0;i<this.dates.length;i++){
         if(this.dates[i].id===id){
           let sum =0
-          for(let j=0;j<this.dates[i].income.length;j++){
-            sum += this.dates[i].income[j].income
+          for(let j=0;j<this.dates[i].items.length;j++){
+            if(this.dates[i].items[j].amount<0)
+            sum += this.dates[i].items[j].amount
           }
            return sum
         }

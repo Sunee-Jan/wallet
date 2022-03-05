@@ -18,7 +18,7 @@
     </ul>
 </template>
 
-<script lang="typescript">
+<script>
 export default {
 name:"IndexBody",
 data(){
@@ -38,34 +38,30 @@ data(){
   }
 },
 methods:{
+  money(id,flag){
+    let sum =0
+    let negSum=0
+    this.dates.forEach(lists=>{
+      if(lists.id===id){        
+         lists.items.forEach(list=>{
+           if(list.amount>0){
+             sum += list.amount
+           }else{
+             negSum += list.amount
+           }
+         })
+      }
+    })
+    return flag?sum:negSum
+  },
   Earn(id){
-    for(let i=0;i<this.dates.length;i++){
-        if(this.dates[i].id===id){
-          let sum =0
-          for(let j=0;j<this.dates[i].items.length;j++){
-            if(this.dates[i].items[j].amount>0)
-            sum += this.dates[i].items[j].amount
-          }
-           return sum
-        }
-    }
+    console.log(this.money(id,1));
+     return this.money(id,1)
   },
   spend(id){
-    for(let i=0;i<this.dates.length;i++){
-        if(this.dates[i].id===id){
-          let sum =0
-          for(let j=0;j<this.dates[i].items.length;j++){
-            if(this.dates[i].items[j].amount<0)
-            sum += this.dates[i].items[j].amount
-          }
-           return sum
-        }
-    }
-  }
+     return  this.money(id,0)
+  },
 },
-mounted(){
-
-}
 }
 </script>
 

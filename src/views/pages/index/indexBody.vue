@@ -1,12 +1,12 @@
 <template>
   <ul class="list">
-        <li v-for="date in dates" :key="date.id">
+        <li v-for="date in $store.state.dates" :key="date.id">
           <h6>
             <span>{{date.day}}</span>
             <span>星期{{date.week}}</span>
             <p>
-              <span>收入：{{Earn(date.id)}}</span>
-              <span>支出：{{spend(date.id)}}</span>
+              <span>收入：{{Earn(date.id)}}{{date.payAll}}</span>
+              <span>支出：{{spend(date.id)}}{{date.incomeAll}}</span>
             </p>
           </h6>
           <p v-for="item in date.items" :key="item.id">
@@ -23,43 +23,18 @@ export default {
 name:"IndexBody",
 data(){
   return{
-     dates:[
-    {id:'001',day:'06月01日',week:'三', items:[
-      {id:'579',icon:'#list',kind:'早餐',amount:-19},
-      {id:'112',icon:'#list',kind:'工资',amount:22000},
-      {id:'115',icon:'#list',kind:'午餐',amount:-21},
-      {id:'116',icon:'#list',kind:'兼职',amount:350},
-      {id:'117',icon:'#list',kind:'必胜客',amount:-300}
-      ]},
-    {id:'002',day:'06月01日',week:'四',items:[
-      {id:'102',icon:'#list',kind:'早餐',amount:-18}
-      ]}
-    ],
   }
 },
 methods:{
-  money(id,flag){
-    let sum =0
-    let negSum=0
-    this.dates.forEach(lists=>{
-      if(lists.id===id){        
-         lists.items.forEach(list=>{
-           if(list.amount>0){
-             sum += list.amount
-           }else{
-             negSum += list.amount
-           }
-         })
-      }
-    })
-    return flag?sum:negSum
-  },
   Earn(id){
-    console.log(this.money(id,1));
-     return this.money(id,1)
+    let test =this.$store.commit('money',{id,flag:1})
+     return test
   },
   spend(id){
-     return  this.money(id,0)
+     return  this.$store.commit('money',{id,flag:0})
+  },
+  mounted() {
+    
   },
 },
 }

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @click="changeShowDate">
     <router-view/>
   </div>
 </template>
@@ -7,6 +7,14 @@
 
 export default {
   name:'App',
+  methods:{
+    changeShowDate(){
+      if(this.$store.state.dateShow){
+        this.$store.state.dateShow=false
+        return
+      }      
+    }
+  }
 }
 </script>
 

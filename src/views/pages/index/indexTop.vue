@@ -2,9 +2,9 @@
   <header>
       <h1>小丸子の帳簿</h1>
       <ul class="timeOption">
-        <li class='timer'>
-         <h4>2021</h4>
-          <p>11月</p>
+        <li class='timer' @click.stop="chooseTime">
+         <h4>{{$store.state.titleTime.slice(0,4)}}</h4>
+          <p><span class="x">{{$store.state.titleTime.slice(5,7)}}</span><span class="month">月<span class="trig"></span></span></p>
         </li>
         <li class="income">
           <h4>收入</h4>
@@ -20,7 +20,18 @@
 
 <script>
 export default {
-name:'IndexTop'
+  data() {
+      return {
+
+      };
+      
+    },
+name:'IndexTop',
+methods: {
+        chooseTime(){
+          this.$store.state.dateShow=true;
+        }
+      },
 }
 </script>
 
@@ -43,9 +54,14 @@ header {
     >li:first-child{
       flex-grow:1;
       padding-left: 0;
-      text-align: center;
+      text-align: left;
+      >h4{
+         margin-left:2rem;
+      }
       >p{
-    border-right: 1px solid $grey-color;
+        font-size: 2.8rem;
+        margin:-.5rem 0 0  1.5rem;
+        border-right: 1px solid $grey-color;
       }
     }
     >li:nth-child(2){
@@ -56,20 +72,38 @@ header {
       flex-grow:2;
     }
     >li{
-      // border: 1px solid red;
-      padding-left: 3rem;
+      padding-left: 2rem;
       >h4{
-    margin-top: 1rem;;
+    margin-top: .5rem;;
+    margin-bottom: .7rem;
      font-size: 1.2rem;
      color:$font-color-min;
      font-family: $font-hei;
-    }
+        }
     >p{
       font-size: 2.2rem;
       margin:.7rem 0;
+      min-width: 70px;
       font-weight: 330;
     }
     }
   }
+}
+.month{
+  position: relative;
+  // border: 1px solid;
+  font-size: 1.6rem;
+}
+.trig{
+  display: inline-block;
+  position: absolute;
+  top:12%;
+  margin-left: 5px;
+  border-top: 9px solid;
+  border-left:6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom:0px solid blue;
+  width: 0;
+  height: 0;
 }
 </style>

@@ -7,17 +7,16 @@
       <p>你可以把这里当做树洞</p> 
       <p>来讲一讲你今天的心情吧</p>
       <p>...</p>
-      <el-row>
-      <el-button type="danger" round size="medium">记录一下吧</el-button>
-      </el-row>
+      <button>记录一下吧</button>
       </div>
-  </lay>
+  </lay> 
   </div>
 </template>
 
 <script>
 export default {
-name:'UserMood'
+name:'UserMood',
+
 }
 </script>
 
@@ -34,12 +33,14 @@ name:'UserMood'
       line-height: 5rem;
     }
   }
-  .el-button--danger{
-    background: pink;
-    border-color:pink;
-    color: #FFF;margin: 4rem;
+button{
+  background: pink;
+    border:none;
+    color: #FFF;
+    margin: 4rem;
     width: 14rem;
     height: 4rem;
+    border-radius: 2rem;
     font-size: 1.8rem;
     font-weight: 800;
     margin: 50px 0;

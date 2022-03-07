@@ -1,18 +1,18 @@
 <template>
   <ul class="list">
-        <li v-for="date in $store.state.dates" :key="date.id">
+        <li v-for="data in $store.getters.dataShow.items" :key="data.id">
           <h6>
-            <span>{{date.day}}</span>
-            <span>星期{{date.week}}</span>
+            <span>{{$store.getters.dataShow.title.slice(5,6)}}月{{data.day}}日</span>
+            <span>星期{{data.week}}</span>
             <p>
-              <span>收入：{{Earn(date.id)}}{{date.payAll}}</span>
-              <span>支出：{{spend(date.id)}}{{date.incomeAll}}</span>
+              <span>支出：{{data.payAll}}</span>
+              <span>收入：{{data.incomeAll}}</span>
             </p>
           </h6>
-          <p v-for="item in date.items" :key="item.id">
-            <Icon :name="item.icon" svg='nav'/>
-            <span class="detail">{{item.kind}}</span>
-            <span class="pay">{{item.amount}}</span>
+          <p v-for="list in data.lists" :key="list.id">
+            <Icon :name="list.icon" svg='nav'/>
+            <span class="detail">{{list.kind}}</span>
+            <span class="pay">{{list.amount}}</span>
           </p>          
         </li>
     </ul>
@@ -26,17 +26,33 @@ data(){
   }
 },
 methods:{
-  Earn(id){
-    let test =this.$store.commit('money',{id,flag:1})
-     return test
-  },
-  spend(id){
-     return  this.$store.commit('money',{id,flag:0})
-  },
-  mounted() {
-    
-  },
+
 },
+mounted(){
+  let sum =0
+  let negSum=0
+  this.$store.getters.dataShow.items.forEach(day=>{
+    day.lists.forEach(list=>{
+      if(list.amount>0){
+        sum += list.amount
+       }else{
+        negSum += list.amount
+      }
+    })
+     day.incomeAll=sum
+     sum =0
+     day.payAll=negSum
+     negSum=0
+  })
+  let come=0
+  let out =0
+  this.$store.getters.dataShow.items.forEach(day=>{
+    come += day.incomeAll
+    out += day.payAll
+  })
+  this.$store.state.monthPay=out
+  this.$store.state.monthIncome=come
+}
 }
 </script>
 

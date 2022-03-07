@@ -8,11 +8,11 @@
         </li>
         <li class="income">
           <h4>收入</h4>
-          <p>23971.50</p>
+          <p>{{$store.state.monthIncome}}</p>
         </li>
         <li class="spending">
           <h4>支出</h4>
-          <p>11186.20</p>
+          <p>{{$store.state.monthPay}}</p>
         </li>
       </ul>
     </header>
@@ -22,7 +22,6 @@
 export default {
   data() {
       return {
-
       };
       
     },

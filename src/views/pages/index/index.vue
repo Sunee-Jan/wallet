@@ -61,6 +61,12 @@ methods:{
   handleEndDateConfirm () {
    this.$store.state.dateShow =false;
    this.$store.state.titleTime=dayjs(this.$store.state.currentDate).format('YYYY-MM')
+   this.$store.state.dataAll.forEach(item=>{
+     if(item.title===this.$store.state.titleTime){
+       this.$store.state.showTile=this.$store.state.dataAll.indexOf(item)
+     }
+   })
+   this.$store.commit('reCount')
   },
 },
 }

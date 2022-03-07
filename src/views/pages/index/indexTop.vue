@@ -4,7 +4,7 @@
       <ul class="timeOption">
         <li class='timer' @click.stop="chooseTime">
          <h4>{{$store.state.titleTime.slice(0,4)}}</h4>
-          <p><span class="x">{{$store.state.titleTime.slice(5,7)}}</span><span class="month">月<span class="trig"></span></span></p>
+          <p><span class="x">{{$store.state.titleTime.slice(5)}}</span><span class="month">月<span class="trig"></span></span></p>
         </li>
         <li class="income">
           <h4>收入</h4>
@@ -29,6 +29,7 @@ name:'IndexTop',
 methods: {
         chooseTime(){
           this.$store.state.dateShow=true;
+          this.$store.commit('reCount')
         }
       },
 }

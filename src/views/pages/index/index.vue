@@ -4,9 +4,9 @@
     <IndexTop/>
     <IndexBody/>
   </lay>
-  <div class="timeCheck" v-show="$store.state.dateShow">
+  <div class="timeCheck" v-show="dateShow">
   <van-datetime-picker class="timePick"
-  v-model="$store.state.currentDate"
+  v-model="$store.state.money.currentDate"
   type="year-month"
   @cancel="handleCancel"
   @confirm="handleEndDateConfirm"
@@ -22,6 +22,7 @@
 <script>
 import IndexBody from './indexBody.vue'
 import IndexTop from './indexTop.vue'
+import { mapState, mapGetters, mapMutations} from 'vuex';
 var dayjs = require('dayjs')
 export default {
   components: { IndexTop, IndexBody },
@@ -32,7 +33,12 @@ export default {
     maxDate: new Date(2100, 11, 1),
   }
 },
+computed:{
+  ...mapState('money',['dataAll','dateShow','currentDate','titleTime','showTile','monthPay','monthIncome']),
+  ...mapGetters('money',['dataShow'])
+},
 methods:{
+  ...mapMutations('money',{reCount:'reCount'}),
   formatter(type, val) {
       if (type === 'year') {
         return `${val}年`;
@@ -45,7 +51,7 @@ methods:{
    setup() {
     let minDate = this.minDate
     let maxDate = this.maxDate
-    let currentDate=this.$store.state.currentDate
+    let currentDate=this.currentDate
     let formatter =this.formatter
     return {
       minDate,
@@ -55,18 +61,19 @@ methods:{
     };
   },
   handleCancel () {
-   this.$store.state.dateShow = false;
+   this.$store.state.money.dateShow = false;
   },
   //开始时间
   handleEndDateConfirm () {
-   this.$store.state.dateShow =false;
-   this.$store.state.titleTime=dayjs(this.$store.state.currentDate).format('YYYY-MM')
-   this.$store.state.dataAll.forEach(item=>{
-     if(item.title===this.$store.state.titleTime){
-       this.$store.state.showTile=this.$store.state.dataAll.indexOf(item)
+   this.$store.state.money.dateShow =false;
+   this.$store.state.money.titleTime=dayjs(this.$store.state.money.currentDate).format('YYYY-MM')
+   this.dataAll.forEach(item=>{
+     if(item.title===this.titleTime){
+       this.$store.state.money.showTile=this.dataAll.indexOf(item)
      }
    })
-   this.$store.commit('reCount')
+  //  this.$store.commit('reCount/reCount')
+  this.reCount()
   },
 },
 }

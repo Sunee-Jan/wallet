@@ -1,8 +1,8 @@
 <template>
   <ul class="list">
-        <li v-for="data in $store.getters.dataShow.items" :key="data.id">
+        <li v-for="data in dataShow.items" :key="data.id">
           <h6>
-            <span>{{$store.getters.dataShow.title.slice(5,6)}}月{{data.day}}日</span>
+            <span>{{dataShow.title.slice(5,6)}}月{{data.day}}日</span>
             <span>星期{{data.week}}</span>
             <p>
               <span>支出：{{data.payAll}}</span>
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapMutations} from 'vuex';
 export default {
 name:"IndexBody",
 data(){
@@ -26,12 +27,16 @@ data(){
   }
 },
 methods:{
-
+...mapMutations('money',{reCount:'reCount'}),
+},
+computed:{
+  ...mapState('money',['dataAll','dateShow','currentDate','titleTime','showTile','monthPay','monthIncome']),
+  ...mapGetters('money',['dataShow'])
 },
 mounted(){
   let sum =0
   let negSum=0
-  this.$store.getters.dataShow.items.forEach(day=>{
+  this.dataShow.items.forEach(day=>{
     day.lists.forEach(list=>{
       if(list.amount>0){
         sum += list.amount
@@ -46,12 +51,12 @@ mounted(){
   })
   let come=0
   let out =0
-  this.$store.getters.dataShow.items.forEach(day=>{
+  this.dataShow.items.forEach(day=>{
     come += day.incomeAll
     out += day.payAll
   })
-  this.$store.state.monthPay=out
-  this.$store.state.monthIncome=come
+  this.$store.state.money.monthPay=out
+  this.$store.state.money.monthIncome=come
 }
 }
 </script>

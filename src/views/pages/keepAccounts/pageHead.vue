@@ -9,13 +9,18 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapMutations} from 'vuex';
 export default {
 name:'PageHead',
 methods:{
   back(){
+     this.$store.state.calculator.counterIsShow=false
       this.$router.back() 
     },
-}
+},
+computed:{
+  ...mapState('calculator',['counterIsShow']),
+},
 }
 </script>
 

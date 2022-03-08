@@ -3,22 +3,23 @@
       <h1>小丸子の帳簿</h1>
       <ul class="timeOption">
         <li class='timer' @click.stop="chooseTime">
-         <h4>{{$store.state.titleTime.slice(0,4)}}</h4>
-          <p><span class="x">{{$store.state.titleTime.slice(5)}}</span><span class="month">月<span class="trig"></span></span></p>
+         <h4>{{titleTime.slice(0,4)}}</h4>
+          <p><span class="x">{{titleTime.slice(5)}}</span><span class="month">月<span class="trig"></span></span></p>
         </li>
         <li class="income">
           <h4>收入</h4>
-          <p>{{$store.state.monthIncome}}</p>
+          <p>{{monthIncome}}</p>
         </li>
         <li class="spending">
           <h4>支出</h4>
-          <p>{{$store.state.monthPay}}</p>
+          <p>{{monthPay}}</p>
         </li>
       </ul>
     </header>
 </template>
 
 <script>
+import { mapState, mapGetters, mapMutations} from 'vuex';
 export default {
   data() {
       return {
@@ -26,11 +27,15 @@ export default {
       
     },
 name:'IndexTop',
+computed:{
+  ...mapState('money',['dataAll','dateShow','currentDate','titleTime','showTile','monthPay','monthIncome']),
+  ...mapGetters('money',['dataShow'])
+},
 methods: {
         chooseTime(){
-          this.$store.state.dateShow=true;
-          this.$store.commit('reCount')
-        }
+          this.$store.state.money.dateShow=true;
+        },
+        ...mapMutations('money',{reCount:'reCount'})
       },
 }
 </script>

@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
   lintOnSave: false,
@@ -25,5 +26,15 @@ module.exports = {
       .plugin("svg-sprite")
       .use(require("svg-sprite-loader-mod/plugin"), [{ plainSprite: true }]);
     config.module.rule("svg").exclude.add(dir); // 其他 svg loader 排除 icons 目录
+  },
+  configureWebpack: {
+    //引入jquery
+    plugins: [
+      new webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery",
+        "windows.jQuery": "jquery",
+      }),
+    ],
   },
 };

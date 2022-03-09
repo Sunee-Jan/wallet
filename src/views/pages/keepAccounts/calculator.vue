@@ -11,7 +11,10 @@
         <button @click='inputContent'>7</button>
         <button @click='inputContent'>8</button>
         <button @click='inputContent'>9</button>
-        <button @click="datePick"><span class="calendar"><Icon name="#日历" svg='menology'/>今天</span></button>
+        <button @click="datePick">
+          <span class="calendar" v-show="!isToday"><Icon name="#日历" svg='menology'/>今天</span>
+          <span v-show="isToday" class="pickedDay">{{currentDate}}</span>
+        </button>
         <button @click='inputContent'>4</button>
         <button @click='inputContent'>5</button>
         <button @click='inputContent'>6</button>
@@ -31,15 +34,26 @@
 
 <script>
 import {nanoid} from 'nanoid'
+import dayjs from 'dayjs'
 export default {
     name:'UerCalculator',
     data() {
       return {
         note:'',
-        number:'0.00'
+        number:'0.00',
+        isToday:false,//选择的日期是否为今天
       }
     },
     computed:{
+    //当前选择的时间
+    currentDate(){
+      if(dayjs(new Date()).format('YYYY/MM/DD')===dayjs(this.$store.state.calculator.currentDate).format('YYYY/MM/DD')){
+        this.isToday=false
+      }else{
+        this.isToday=true
+        return dayjs(this.$store.state.calculator.currentDate).format('YYYY/MM/DD')
+      }
+    },
     //计算器是否显示
     counterIsShow:{
     get(){
@@ -161,7 +175,7 @@ methods:{
      return this.number +=e.target.textContent
     }
   },
-  //回退
+  //计算数字内容回退
   back(){
     if(this.number.length===1){
       if('0123456789'.indexOf(this.number)>=0){
@@ -180,43 +194,62 @@ methods:{
   datePick(){
     this.calendarIsShow=true
   },
+  //清空数据库
+  toEmptyDataAll(){
+    if(!this.$store.state.money.dataAll[0].title){
+    this.dataAll=[]
+  }
+  },
+  //push数据库新数据
+  updateDataAll(){
+  let flagPushDay=true
+  let flagPushYM =true
+  let indexPushDate=-1
+     this.dataAll.forEach(everyMOnth=>{
+     if(everyMOnth.title===this.createYM){
+        everyMOnth.items.forEach(everyDay=>{
+        if(everyDay.day===this.createDD){
+           everyDay.list.push(this.createList)//新增同日数据
+           flagPushDay = false
+          }
+        })
+        flagPushYM =false
+        indexPushDate=this.dataAll.indexOf(everyMOnth)
+       }
+     })
+  if(!flagPushYM && flagPushDay){
+    this.dataAll[indexPushDate].items.push(this.createYMInfo)//新增不同日数据
+    flagPushYM =true
+  }else if(flagPushYM){
+     this.dataAll.push(this.createData) //新增不同年月数据
+  }
+  },
+  //将最新数据库存入localStorage中
+  putLocalStorage(){
+    localStorage.setItem('m',JSON.stringify(this.dataAll))
+  },
+  //断开calculator中crateData地址，以免影响dataAll
+  changeCreateDataAddress(){
+    this.$store.state.calculator.createData=[{title:'YYYY-MM',items:[
+            {day:'DD',week:'',payAll:0,incomeAll:0,list:[
+                {id:'',icon:'',kind:'',amount:0}]
+            }]
+      }]
+  },
   //完成 提交数据
   done(){
   this.amount=this.number
+  this.number='0.00'
   this.createId=nanoid()
   this.counterIsShow=false
   if(this.note){
     this.kind=this.note
   }
-  let flagPushDay=true
-  let flagPushYM =true
-  let indexPushDate=-1
-  this.dataAll.forEach(everyMOnth=>{
-    if(everyMOnth.title===this.createYM){
-        everyMOnth.items.forEach(everyDay=>{
-          if(everyDay.day===this.createDD){
-            console.log('新增同日数据'+everyDay.lists);
-            everyDay.lists.push(this.createList)//新增同日数据
-             flagPushDay = false
-          }
-        })
-            flagPushYM =false
-            //  console.log(this.dataAll.indexOf(everyMOnth));
-             indexPushDate=this.dataAll.indexOf(everyMOnth)
-    }
-  })
-  if(!flagPushYM && flagPushDay){
-    console.log('新增不同日数据'+this.dataAll[indexPushDate].items);
-    this.dataAll[indexPushDate].items.push(this.createYMInfo)//新增不同日数据
-    flagPushYM =true
-  }else if(flagPushYM){
-    console.log('新增不同年月数据'+this.dataAll);
-    this.dataAll.push(this.createData) //新增不同年月数据
-  }
-  console.log(JSON.stringify(this.createData));
-  console.log(JSON.stringify(this.dataAll));
+  this.toEmptyDataAll()
+  this.updateDataAll()
+  this.putLocalStorage()
+  this.changeCreateDataAddress()
   },
-    
 }
 }
 </script>
@@ -295,4 +328,7 @@ input::placeholder{
           height: 2.5rem;
         }
       }
+  .pickedDay{
+    font-size: 1.6rem;
+  }
 </style>

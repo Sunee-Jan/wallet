@@ -1,21 +1,28 @@
 <template>
-  <ul class="list">
+<div class="showPart">
+  <ul  v-if="!isShow">
+    <li>暂无数据</li>
+  </ul>
+<ul class="list" v-if="isShow">
         <li v-for="data in dataShow.items" :key="data.id">
           <h6>
             <span>{{dataShow.title.slice(5,7)}}月{{data.day}}日</span>
-            <span>星期{{data.week}}</span>
+            <span>{{data.week}}</span>
             <p>
               <span>支出：{{data.payAll}}</span>
               <span>收入：{{data.incomeAll}}</span>
             </p>
           </h6>
-          <p v-for="list in data.lists" :key="list.id">
+          <p v-for="list in data.list" :key="list.id">
             <Icon :name="list.icon" svg='nav'/>
             <span class="detail">{{list.kind}}</span>
             <span class="pay">{{list.amount}}</span>
           </p>          
         </li>
     </ul>
+
+</div>
+  
 </template>
 
 <script>
@@ -31,13 +38,16 @@ methods:{
 },
 computed:{
   ...mapState('money',['dataAll','dateShow','currentDate','titleTime','showTile','monthPay','monthIncome']),
-  ...mapGetters('money',['dataShow'])
+  ...mapGetters('money',['dataShow']),
+  isShow(){
+    return this.$store.state.money.dataAll[0].title
+  }
 },
 mounted(){
   let sum =0
   let negSum=0
   this.dataShow.items.forEach(day=>{
-    day.lists.forEach(list=>{
+    day.list.forEach(list=>{
       if(list.amount>0){
         sum += list.amount
        }else{

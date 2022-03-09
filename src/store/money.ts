@@ -1,24 +1,9 @@
+import { number } from "echarts";
+
 export default{
     namespaced: true,
     state: {
-        dataAll:[ 
-          {title:'2020-02',items:[
-            {day:'10',week:'三',payAll:0,incomeAll:0,lists:[
-              // {id:'57900',icon:'#list',kind:'早餐',amount:-19},
-              // {id:'11200',icon:'#list',kind:'工资',amount:22000},
-              // {id:'11500',icon:'#list',kind:'午餐',amount:-21},
-              {id:'11700',icon:'#list',kind:'兼职',amount:350},]},
-            {day:'11',week:'四',payAll:0,incomeAll:0,lists:[
-              // {id:'10200',icon:'#coffee',kind:'早餐',amount:-19},
-              // {id:'11800',icon:'#coffee',kind:'午餐',amount:-21},
-              {id:'11600',icon:'#coffee',kind:'兼职',amount:350}, ]}
-          ]}, 
-          {title:'2020-01',items:[
-            {day:'02',week:'一',payAll:0,incomeAll:0,lists:[
-              // {id:'57900',icon:'#list',kind:'早餐',amount:-19},
-              // {id:'11500',icon:'#list',kind:'午餐',amount:-21},
-              {id:'11700',icon:'#list',kind:'兼职',amount:350},]}]},     
-        ],
+       dataAll:JSON.parse(localStorage.getItem('m') ||`[{"title":"","items":[{"day":"","week":"","payAll":0,"incomeAll":0,"list":[{"id":"","icon":"","kind":"","amount":0}]}]}]`) ,
         dateShow:false,
         currentDate:new Date(),
         titleTime:'',
@@ -37,10 +22,10 @@ export default{
     mutations: {
       //计算选择月份的总收入和总支出
       reCount(state: { dataAll: { [x: string]: { items: any[] } }; showTile: string | number; monthIncome: number; monthPay: number }){
-      state.dataAll[state.showTile].items.forEach((day: { incomeAll: number; payAll: number; lists: any[] })=>{
+      state.dataAll[state.showTile].items.forEach((day: { incomeAll: number; payAll: number; lists: any[] })=>{       
        day.incomeAll=0
        day.payAll=0
-       day.lists.forEach((list: { amount: number })=>{      
+       day.list.forEach((list: { amount: number })=>{    
         if(list.amount>0){
           day.incomeAll += list.amount
          }else{

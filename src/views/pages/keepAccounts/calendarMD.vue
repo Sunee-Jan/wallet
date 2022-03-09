@@ -22,7 +22,7 @@ data() {
   return {
     minDate: new Date(2010, 0, 1),
     maxDate: new Date(2100, 11, 31),
-    currentDate: new Date(),
+    // currentDate: new Date(),
   }
 },
 computed:{
@@ -58,6 +58,14 @@ computed:{
       const week=['星期日','星期一','星期二','星期三','星期四','星期五','星期六']
       return this.$store.state.calculator.createData[0].items[0].week=week[val]
     }
+  },
+  currentDate:{
+    get(){
+      return this.$store.state.calculator.currentDate
+    },
+    set(val){
+      this.$store.state.calculator.currentDate=val
+    }
   }
 },
 methods:{
@@ -79,7 +87,7 @@ methods:{
    this.calendarIsShow =false;//关闭日历
    this.getYM=dayjs(this.currentDate).format('YYYY-MM-DD').slice(0,7)//获取年月
    this.getD=dayjs(this.currentDate).format('YYYY-MM-DD').slice(8)//获取年日
-   this.getW=dayjs(this.currentDate).format('YYYY-MM-DD-d').slice(11)//获取星期
+   this.getW=dayjs(this.currentDate).format('YYYY-MM-DD-d').slice(11)//获取星期  
   },
 },
 mounted(){

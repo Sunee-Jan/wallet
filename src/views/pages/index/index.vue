@@ -16,7 +16,6 @@ var dayjs = require('dayjs')
 export default {
   components: { IndexTop, IndexBody, CalendarMM },
   name:'UserList',
-
 }
 </script>
 

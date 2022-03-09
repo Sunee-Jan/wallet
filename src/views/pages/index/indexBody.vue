@@ -2,7 +2,7 @@
   <ul class="list">
         <li v-for="data in dataShow.items" :key="data.id">
           <h6>
-            <span>{{dataShow.title.slice(5,6)}}月{{data.day}}日</span>
+            <span>{{dataShow.title.slice(5,7)}}月{{data.day}}日</span>
             <span>星期{{data.week}}</span>
             <p>
               <span>支出：{{data.payAll}}</span>

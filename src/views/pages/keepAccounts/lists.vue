@@ -1,7 +1,7 @@
 <template>
       <main class="page-body">
       <div class="item-wrap wrap" v-for='(icon,index) in icons' :key="index">
-            <Icon :name="icon" svg='item' @click.native="pickIcon"/>
+            <Icon :name="icon" svg='item' @click.native="pickIcon($event,icon)"/>
             <p>{{icon.slice(1)}}</p>
       </div>
       <div class="set-wrap wrap"><Icon name="#set" svg='set'/><p>设置</p></div>   
@@ -22,10 +22,12 @@ computed:{
   ...mapState('calculator',['counterIsShow']),
 },
 methods:{
-      pickIcon(e){
+      pickIcon(e,icon){
       $('svg').removeClass('backPink')
       $(e.target).addClass('backPink')
       this.$store.state.calculator.counterIsShow=true
+      this.$store.state.calculator.createData[0].items[0].list[0].icon=icon    
+      this.$store.state.calculator.createData[0].items[0].list[0].kind=icon.slice(1)
       }
 }
 }

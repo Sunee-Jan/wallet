@@ -11,7 +11,7 @@
         <button @click='inputContent'>7</button>
         <button @click='inputContent'>8</button>
         <button @click='inputContent'>9</button>
-        <button><span class="calendar"><Icon name="#日历" svg='menology'/>今天</span></button>
+        <button @click="datePick"><span class="calendar"><Icon name="#日历" svg='menology'/>今天</span></button>
         <button @click='inputContent'>4</button>
         <button @click='inputContent'>5</button>
         <button @click='inputContent'>6</button>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations} from 'vuex';
+import {nanoid} from 'nanoid'
 export default {
     name:'UerCalculator',
     data() {
@@ -40,12 +40,108 @@ export default {
       }
     },
     computed:{
-  ...mapState('calculator',['counterIsShow']),
+    //计算器是否显示
+    counterIsShow:{
+    get(){
+     return this.$store.state.calculator.counterIsShow
+    },
+    set(val){
+    return this.$store.state.calculator.counterIsShow=val
+    }
+  },
+    //日历是否显示
+    calendarIsShow:{
+    get(){
+     return this.$store.state.calculator.calendarIsShow
+    },
+    set(val){
+    return this.$store.state.calculator.calendarIsShow=val
+    }
+  },
+   //读写kind数据
+   kind:{
+     get(){
+      return this.$store.state.calculator.createData[0].items[0].list[0].kind
+     },
+     set(val){
+      return this.$store.state.calculator.createData[0].items[0].list[0].kind=val
+     }
+   },
+   //读写amount数据
+   amount:{
+     get(){
+       return this.$store.state.calculator.createData[0].items[0].list[0].amount
+     },
+     set(val){
+       return this.$store.state.calculator.createData[0].items[0].list[0].amount=-parseFloat(val)
+     }
+   },
+   //读写新增的数据
+   createData:{
+     get(){
+       return this.$store.state.calculator.createData[0]
+     },
+     set(val){
+       this.$store.state.calculator.createData[0]=val
+     }
+   },
+   //读写每个日期的Id
+   createId:{
+     get(){
+       return this.createData.items[0].list[0].id
+     },
+     set(val){
+       this.createData.items[0].list[0].id=val
+     }
+   },
+   //读写新增数据的年和月
+   createYM:{
+     get(){
+       return this.createData.title
+     },
+     set(val){
+       this.createData.title=val
+     }
+   },
+   //读写新增数据的该年月下的信息
+   createYMInfo:{
+     get(){
+       return this.createData.items[0]
+     },
+     set(val){
+       this.createData.items[0]=val
+     }
+   },
+   //读写新增数据的日期
+  createDD:{
+    get(){
+      return this.createYMInfo.day
+    },
+    set(val){
+      this.createYMInfo.day = val
+    }
+  },
+  //读写新增数据该日期下的其他数据list
+  createList:{
+    get(){
+      return this.createYMInfo.list[0]
+    },
+    set(val){
+      this.createYMInfo.list[0]=val
+    }
+  },
+  //读写数据库里的所有数据
+  dataAll:{
+    get(){
+      return this.$store.state.money.dataAll
+    },
+    set(val){
+      this.$store.state.money.dataAll=val
+    }
+  }
 },
 methods:{
-  done(){
-  this.$store.state.calculator.counterIsShow=false
-  },
+  //计算结果
   inputContent(e){
     if(this.number.length===8){return}
     if(this.number==='0.00'||this.number==='0'){
@@ -65,6 +161,7 @@ methods:{
      return this.number +=e.target.textContent
     }
   },
+  //回退
   back(){
     if(this.number.length===1){
       if('0123456789'.indexOf(this.number)>=0){
@@ -75,9 +172,51 @@ methods:{
       this.number=this.number.slice(0,lastIndex)
     }
   },
+  //清空数据
   empty(){
    return this.number='0'
+  },
+  //显示日历
+  datePick(){
+    this.calendarIsShow=true
+  },
+  //完成 提交数据
+  done(){
+  this.amount=this.number
+  this.createId=nanoid()
+  this.counterIsShow=false
+  if(this.note){
+    this.kind=this.note
   }
+  let flagPushDay=true
+  let flagPushYM =true
+  let indexPushDate=-1
+  this.dataAll.forEach(everyMOnth=>{
+    if(everyMOnth.title===this.createYM){
+        everyMOnth.items.forEach(everyDay=>{
+          if(everyDay.day===this.createDD){
+            console.log('新增同日数据'+everyDay.lists);
+            everyDay.lists.push(this.createList)//新增同日数据
+             flagPushDay = false
+          }
+        })
+            flagPushYM =false
+            //  console.log(this.dataAll.indexOf(everyMOnth));
+             indexPushDate=this.dataAll.indexOf(everyMOnth)
+    }
+  })
+  if(!flagPushYM && flagPushDay){
+    console.log('新增不同日数据'+this.dataAll[indexPushDate].items);
+    this.dataAll[indexPushDate].items.push(this.createYMInfo)//新增不同日数据
+    flagPushYM =true
+  }else if(flagPushYM){
+    console.log('新增不同年月数据'+this.dataAll);
+    this.dataAll.push(this.createData) //新增不同年月数据
+  }
+  console.log(JSON.stringify(this.createData));
+  console.log(JSON.stringify(this.dataAll));
+  },
+    
 }
 }
 </script>

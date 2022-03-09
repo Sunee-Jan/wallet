@@ -83,14 +83,23 @@ methods:{
   },
   //开始时间
   handleEndDateConfirm () {
-    this.dateIsShow =false;
+   this.dateIsShow =false;
    this.titleTime=dayjs(this.$store.state.money.currentDate).format('YYYY-MM')
+
+   let hasData=false
    this.dataAll.forEach(item=>{
       if(item.title===this.titleTime){
        this.showTile=this.dataAll.indexOf(item)
+       hasData=true
      }
    })
+   if(!hasData){
+     this.$store.state.money.isSHowListPage=false
+     return
+   }else{
       this.reCount()
+   }
+     
   },
 }
 }

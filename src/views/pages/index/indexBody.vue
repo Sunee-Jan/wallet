@@ -1,9 +1,9 @@
 <template>
 <div class="showPart">
-  <ul  v-if="!isShow">
+  <ul  v-if="!isSHowListPage">
     <li>暂无数据</li>
   </ul>
-<ul class="list" v-if="isShow">
+<ul class="list" v-if="isSHowListPage">
         <li v-for="data in dataShow.items" :key="data.id">
           <h6>
             <span>{{dataShow.title.slice(5,7)}}月{{data.day}}日</span>
@@ -39,11 +39,24 @@ methods:{
 computed:{
   ...mapState('money',['dataAll','dateShow','currentDate','titleTime','showTile','monthPay','monthIncome']),
   ...mapGetters('money',['dataShow']),
-  isShow(){
-    return this.$store.state.money.dataAll[0].title
+  // isShow(){
+  //   return this.$store.state.money.dataAll[0].title
+  // },
+  isSHowListPage:{
+    get(){
+      return this.$store.state.money.isSHowListPage
+    },
+    set(val){
+      this.$store.state.money.isSHowListPage=val
+    }
   }
 },
 mounted(){
+  //判断初始化首页是否可以展示数据
+  console.log(JSON.stringify(this.$store.state.money.dataAll[0].title));
+  if(this.$store.state.money.dataAll[0].title){
+    this.isSHowListPage=true
+  }
   let sum =0
   let negSum=0
   this.dataShow.items.forEach(day=>{

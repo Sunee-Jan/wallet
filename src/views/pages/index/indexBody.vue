@@ -129,8 +129,8 @@ mounted(){
       width: 3.7rem;
       height: 3.7rem;  
       padding: 6px; 
-      border-radius: 50%;
-      color:$dev-color;
+      border-radius: 30%;
+      color:$font-color;
       background-color: $main-color;
     }
   }

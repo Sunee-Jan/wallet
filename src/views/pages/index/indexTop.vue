@@ -2,7 +2,7 @@
   <header>
       <h1>小丸子の帳簿</h1>
       <ul class="timeOption">
-        <li class='timer' @click.stop="chooseTime">
+        <li class='timer' @click.stop="chooseTime" >
          <h4>{{titleTime.slice(0,4)}}</h4>
           <p><span class="x">{{titleTime.slice(5)}}</span><span class="month">月<span class="trig"></span></span></p>
         </li>
@@ -20,23 +20,23 @@
 
 <script>
 import { mapState, mapGetters, mapMutations} from 'vuex';
+var dayjs = require('dayjs')
 export default {
   data() {
       return {
       };
-      
     },
 name:'IndexTop',
 computed:{
-  ...mapState('money',['dataAll','dateShow','currentDate','titleTime','showTile','monthPay','monthIncome']),
-  ...mapGetters('money',['dataShow'])
+  ...mapState('money',['dataAll','dateShow','currentDate','showTile','monthPay','monthIncome','titleTime']),
+  ...mapGetters('money',['dataShow']),
 },
 methods: {
-        chooseTime(){
+chooseTime(){
           this.$store.state.money.dateShow=true;
         },
-        ...mapMutations('money',{reCount:'reCount'})
-      },
+  ...mapMutations('money',{reCount:'reCount'}),
+},
 }
 </script>
 

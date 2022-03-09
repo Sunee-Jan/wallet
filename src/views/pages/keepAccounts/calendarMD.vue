@@ -22,7 +22,7 @@ data() {
   return {
     minDate: new Date(2010, 0, 1),
     maxDate: new Date(2100, 11, 31),
-    // currentDate: new Date(),
+    // currentDate: new Date(),//放入vuex管理
   }
 },
 computed:{

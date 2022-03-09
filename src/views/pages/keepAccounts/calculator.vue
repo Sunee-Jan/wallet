@@ -249,6 +249,7 @@ methods:{
   this.updateDataAll()
   this.putLocalStorage()
   this.changeCreateDataAddress()
+  this.$router.back()
   },
 }
 }

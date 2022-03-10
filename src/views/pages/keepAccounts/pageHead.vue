@@ -1,8 +1,8 @@
 <template>
 <div class="head-wrap">
    <header class="page-head">
-      <p><span class="payout active">支出</span></p>
-      <p><span class="income">收入</span><span class="cancel" @click="back">取消</span></p>
+      <p><span class="payout active" @click="chosePay">支出</span></p>
+      <p><span class="income" @click="choseEarn">收入</span><span class="cancel" @click="back">取消</span></p>
     </header>
 </div>
      
@@ -17,9 +17,27 @@ methods:{
      this.$store.state.calculator.counterIsShow=false
       this.$router.back() 
     },
+  chosePay(){
+    this.$store.state.money.isShowPayList=true
+    $('.income').removeClass('active')
+    $('.payout').addClass('active')
+  },
+  choseEarn(){
+    this.$store.state.money.isShowPayList=false
+     $('.payout').removeClass('active')
+    $('.income').addClass('active')
+  }
 },
 computed:{
   ...mapState('calculator',['counterIsShow']),
+  isShowPayList:{
+    get(){
+      return this.$store.state.money.isShowPayList
+    },
+    set(val){
+      this.$store.state.money.isShowPayList=val
+    }
+  }
 },
 }
 </script>
@@ -44,11 +62,13 @@ computed:{
       height: inherit;
       padding: 0 1.6rem 0 1.2rem;
       text-align: right;
-      >.active{
+      >span{
         display: inline-block;
-        border-bottom: 2px solid;
         height: inherit;
         padding:0 0.6rem;
+      }
+      >.active{
+        border-bottom: 2px solid;
       }
     }
     >p:nth-child(2){
@@ -56,6 +76,7 @@ computed:{
       display: flex;
       justify-content: space-between;
       >.cancel{
+        margin-right: 1rem;
         font-size: 1.4rem;
         line-height: 7rem;
       }

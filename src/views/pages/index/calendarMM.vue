@@ -66,6 +66,7 @@ computed:{
 },
 methods:{
   ...mapMutations('money',{reCount:'reCount'}),
+  //dayjs相关格式操作
   formatter(type, val) {
       if (type === 'year') {
         return `${val}年`;
@@ -107,7 +108,7 @@ methods:{
   handleCancel () {
    this.dateIsShow = false;
   },
-    //开始时间
+    //点击确认时间操作
   handleEndDateConfirm () {
    this.dateIsShow =false;
    this.titleTime=dayjs(this.currentDate).format('YYYY-MM')

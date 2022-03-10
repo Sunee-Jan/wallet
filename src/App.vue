@@ -32,5 +32,10 @@ a{
 html{
   font-size: 10px;
 }
+@media screen and (min-width: 800px){
+  html{
+  font-size: 15px;
+}
+}
 
 </style>

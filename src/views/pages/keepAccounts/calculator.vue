@@ -46,6 +46,7 @@ export default {
       }
     },
     computed:{
+    ...mapState('money',['isShowPayList']),
     //当前选择的时间
     currentDate(){
       if(dayjs(new Date()).format('YYYY/MM/DD')===dayjs(this.$store.state.calculator.currentDate).format('YYYY/MM/DD')){
@@ -88,7 +89,11 @@ export default {
        return this.$store.state.calculator.createData[0].items[0].list[0].amount
      },
      set(val){
-       return this.$store.state.calculator.createData[0].items[0].list[0].amount=-parseFloat(val)
+       if(this.isShowPayList){
+         return this.$store.state.calculator.createData[0].items[0].list[0].amount=-parseFloat(val)
+       }else{
+        return this.$store.state.calculator.createData[0].items[0].list[0].amount=parseFloat(val)
+       }
      }
    },
    //读写新增的数据

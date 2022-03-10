@@ -12,6 +12,7 @@ export default{
         monthPay:0,
         monthIncome:0,
         isSHowListPage:false,
+        isShowPayList:true
     },
     getters:{
       //默认首次进入页面展示的月份数据，默认为已记录的最新数据

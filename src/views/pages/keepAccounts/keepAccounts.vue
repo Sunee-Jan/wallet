@@ -1,7 +1,8 @@
 <template>
   <div class="account">
     <PageHead/>
-      <Lists/>
+      <listsPay v-if="isShowPayList"/>
+      <ListEarn v-if="!isShowPayList"/>
     <Calculator/> 
     <CalendarMD/>
   </div>
@@ -10,11 +11,17 @@
 <script>
 import Calculator from '@/views/pages/keepAccounts/calculator.vue'
 import PageHead from '@/views/pages/keepAccounts/pageHead.vue'
-import Lists from './lists.vue'
+import listsPay from './listsPay.vue'
 import CalendarMD from './calendarMD.vue'
+import ListEarn from './listEarn.vue'
 export default {
 name:'UserAccounts',
-components:{Calculator,PageHead, Lists, CalendarMD},
+components:{Calculator,PageHead, listsPay, CalendarMD, ListEarn},
+computed:{
+  isShowPayList(){
+    return this.$store.state.money.isShowPayList
+  }
+}
 }
 </script>
 

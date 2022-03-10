@@ -13,10 +13,11 @@
               <span>收入：{{data.incomeAll}}</span>
             </p>
           </h6>
-          <p v-for="list in data.list" :key="list.id">
+          <p class="list" v-for="list in data.list" :key="list.id">
             <Icon :name="list.icon" svg='nav'/>
             <span class="detail">{{list.kind}}</span>
             <span class="pay">{{list.amount}}</span>
+            <span class="delete">删除</span>
           </p>          
         </li>
     </ul>
@@ -94,25 +95,28 @@ mounted(){
       flex-grow: 16;
       >span{
         display: block;
-        float: right;margin-left: 10px;
+        float: right;
+        margin-left: 10px;
       }
     }
    }
-  >p{
+  >.list{
     display: flex;
-    height: 6rem;
-    font-size: 1.6rem;
-    padding: 0.7rem 1.5rem ;
+    height: 5.3rem;
+    font-size: 1.5rem;
+    font-weight: 300;
+    padding: 0.7rem 1.5rem 0 1.5rem ;
     padding-right: 0;
-    >.detail{
-      line-height: 5vh;
+     >.detail{
+      line-height: 4rem;
       box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
     }
     >.pay{
-      line-height: 5vh;
+      line-height: 4rem;
       flex-grow: 1;
       text-align: right;
       padding-right: 15px;
+      font-size: 1.5rem;
       box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
     }
     >.nav{
@@ -124,7 +128,52 @@ mounted(){
       color:$font-color;
       background-color: $main-color;
     }
+    >.delete{
+      display: none;
+      cursor: pointer;
+      background-color: #ed736e;
+      color: #fff;
+      margin-top:-.7rem;
+      line-height: 6.5vh;
+      font-size: 1.6rem;
+      padding: 0 2rem;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+    }
+  }
+  @media screen and (min-width: 800px){
+    .list{
+      font-weight: 400;
+      height: 7rem;
+      font-size: 1.5rem;
+      // padding: 0.7rem 2rem 0 2.5rem;
+      >.pay{
+      line-height: 10vh;
+      padding-right: 30px;
+    }
+    >.delete{
+      line-height: 12.5vh;
+      // margin-right:-2rem;
+    }
+    >.detail{
+      line-height: 10vh;
+    }
+    >.nav{
+      line-height: 10vh;
+      margin-top:12px;
+    }
+    }
+    h6{
+    >p{
+      flex-grow: 80;
+    }
   }
   }
+  >.list:hover .delete{
+    display: block;
+  }
+  }
+  .active{
+    display: block;
+    }
   }
 </style>

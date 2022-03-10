@@ -34,7 +34,7 @@ data(){
   }
 },
 methods:{
-...mapMutations('money',{reCount:'reCount'}),
+...mapMutations('money',{reCount:'reCount',sortDataAll:'sortDataAll'}),
 },
 computed:{
   ...mapState('money',['dataAll','dateShow','currentDate','titleTime','showTile','monthPay','monthIncome']),
@@ -52,34 +52,12 @@ computed:{
   }
 },
 mounted(){
+  this.sortDataAll()
   //判断初始化首页是否可以展示数据
-  console.log(JSON.stringify(this.$store.state.money.dataAll[0].title));
   if(this.$store.state.money.dataAll[0].title){
     this.isSHowListPage=true
   }
-  let sum =0
-  let negSum=0
-  this.dataShow.items.forEach(day=>{
-    day.list.forEach(list=>{
-      if(list.amount>0){
-        sum += list.amount
-       }else{
-        negSum += list.amount
-      }
-    })
-     day.incomeAll=sum
-     sum =0
-     day.payAll=negSum
-     negSum=0
-  })
-  let come=0
-  let out =0
-  this.dataShow.items.forEach(day=>{
-    come += day.incomeAll
-    out += day.payAll
-  })
-  this.$store.state.money.monthPay=out
-  this.$store.state.money.monthIncome=come
+  this.reCount()
 }
 }
 </script>

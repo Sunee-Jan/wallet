@@ -35,6 +35,7 @@
 <script>
 import {nanoid} from 'nanoid'
 import dayjs from 'dayjs'
+import { mapState, mapGetters, mapMutations} from 'vuex';
 export default {
     name:'UerCalculator',
     data() {
@@ -155,6 +156,7 @@ export default {
   }
 },
 methods:{
+  ...mapMutations('money',{reCount:'reCount',sortDataAll:'sortDataAll'}),
   //计算结果
   inputContent(e){
     if(this.number.length===8){return}
@@ -223,6 +225,7 @@ methods:{
   }else if(flagPushYM){
      this.dataAll.push(this.createData) //新增不同年月数据
   }
+  this.sortDataAll()
   },
   //将最新数据库存入localStorage中
   putLocalStorage(){

@@ -53,6 +53,15 @@ computed:{
     set(val){
       this.$store.state.money.showTile=val
     }
+  },
+  //判断页面是否展示数据页面
+  isSHowListPage:{
+    get(){
+      return this.$store.state.money.isSHowListPage
+    },
+    set(val){
+      this.$store.state.money.isSHowListPage=val
+    }
   }
 },
 methods:{
@@ -78,14 +87,8 @@ methods:{
       currentDate,
     };
   },
-  handleCancel () {
-   this.dateIsShow = false;
-  },
-  //开始时间
-  handleEndDateConfirm () {
-   this.dateIsShow =false;
-   this.titleTime=dayjs(this.$store.state.money.currentDate).format('YYYY-MM')
-
+  //根据选择的时间执行页面展示相关数据
+   showAboutDataPage(){
    let hasData=false
    this.dataAll.forEach(item=>{
       if(item.title===this.titleTime){
@@ -94,12 +97,21 @@ methods:{
      }
    })
    if(!hasData){
-     this.$store.state.money.isSHowListPage=false
+     this.isSHowListPage=false
      return
    }else{
+     this.isSHowListPage=true
       this.reCount()
    }
-     
+  },
+  handleCancel () {
+   this.dateIsShow = false;
+  },
+    //开始时间
+  handleEndDateConfirm () {
+   this.dateIsShow =false;
+   this.titleTime=dayjs(this.currentDate).format('YYYY-MM')
+   this.showAboutDataPage()
   },
 }
 }

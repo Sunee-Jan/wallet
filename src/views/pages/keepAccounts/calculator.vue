@@ -243,10 +243,17 @@ methods:{
      })
   if(!flagPushYM && flagPushDay){
     this.dataAll[indexPushDate].items.push(this.createYMInfo)//新增不同日数据
+    this.sortDataAll()
     flagPushYM =true
   }else if(flagPushYM){
      this.dataAll.push(this.createData) //新增不同年月数据
-  }
+  } 
+    this.dataAll.forEach(everyMOnth=>{
+    if(everyMOnth.title===this.createYM){
+    this.$store.state.money.showTile = this.dataAll.indexOf(everyMOnth)
+    }
+  })
+  this.reCount()
   this.sortDataAll()
   },
   //将最新数据库存入localStorage中
@@ -255,7 +262,7 @@ methods:{
   // },
   //断开calculator中crateData地址，以免影响dataAll
   changeCreateDataAddress(){
-    this.$store.state.calculator.createData=[{title:'YYYY-MM',items:[
+    this.$store.state.calculator.createData=[{title:'YYYYMM',items:[
             {day:'DD',week:'',payAll:0,incomeAll:0,list:[
                 {id:'',icon:'',kind:'',amount:0}]
             }]
@@ -272,7 +279,6 @@ methods:{
   }
   this.toEmptyDataAll()
   this.updateDataAll()
-  this.putLocalStorage()
   this.changeCreateDataAddress()
   //返回首页
   this.$router.replace({

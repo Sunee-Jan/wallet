@@ -4,9 +4,9 @@
       <ul class="timeOption">
         <li class='timer' @click.stop="chooseTime" >
          <h4>{{titleTime.slice(0,4)}}</h4>
-          <p><span class="x">{{titleTime.slice(5)}}</span><span class="month">月<span class="trig"></span></span></p>
+          <p><span class="x">{{titleTime.slice(4)}}</span><span class="month">月<span class="trig"></span></span></p>
         </li>
-        <li class="income">
+        <li class="income">  
           <h4>收入</h4>
           <p>{{monthIncome}}</p>
         </li>
@@ -28,8 +28,16 @@ export default {
     },
 name:'IndexTop',
 computed:{
-  ...mapState('money',['dataAll','dateShow','currentDate','showTile','monthPay','monthIncome','titleTime']),
+  ...mapState('money',['dataAll','dateShow','currentDate','showTile','monthPay','monthIncome']),
   ...mapGetters('money',['dataShow']),
+  titleTime:{
+    get(){
+      return this.$store.state.money.titleTime
+    },
+    set(val){
+       this.$store.state.money.titleTime=val
+    }
+  }
 },
 methods: {
 chooseTime(){
@@ -37,6 +45,11 @@ chooseTime(){
         },
   ...mapMutations('money',{reCount:'reCount'}),
 },
+mounted(){
+  if(this.dataShow.title){
+    this.titleTime=this.dataShow.title
+  }
+}
 }
 </script>
 

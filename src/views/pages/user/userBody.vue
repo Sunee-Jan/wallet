@@ -8,15 +8,36 @@
     </p>
     </div>
   <div class="account">
-    <p class="positive">+1000</p>
-    <p class="negative">-600</p>
+    <p class="positive">+{{allAsset}}</p>
+    <p class="negative">{{allDebt}}</p>
   </div>
 </main>
 </template>
 
 <script>
+import { mapState, mapGetters, mapMutations} from 'vuex';
 export default {
-
+  computed:{
+    ...mapState('money',['dataAll','dateShow','currentDate','titleTime','showTile','monthPay','monthIncome']),
+    allAsset(){
+      let count=0
+      this.dataAll.forEach(element => {
+         element.items.forEach(item=>{
+           count+=item.incomeAll
+         })
+      });
+      return count
+    },
+    allDebt(){
+       let count=0
+      this.dataAll.forEach(element => {
+         element.items.forEach(item=>{
+           count+=item.payAll
+         })
+      });
+      return count
+    }
+  }
 }
 </script>
 

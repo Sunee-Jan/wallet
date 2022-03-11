@@ -1,6 +1,7 @@
 <template>
   <div>
   <lay>
+    <header><div class="classfy"><p>周</p><p>月</p><p>年</p></div></header>
      <div id="myChart" :style="{width: '300px', height: '300px'}"></div>
   </lay>
   </div>
@@ -11,7 +12,8 @@ export default {
   name: 'hello',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      money:100
     }
   },
   mounted(){
@@ -25,13 +27,13 @@ export default {
             title: { text: '在Vue中使用echarts' },
             tooltip: {},
             xAxis: {
-                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+                data: [1, 5, 10, 15, 20, 25, 31] 
             },
             yAxis: {},
             series: [{
                 name: '销量',
-                type: 'bar',
-                data: [5, 20, 36, 10, 10, 20]
+                type: 'line',
+                data: [`${this.money}`,"600","700","300","200","50"]
             }]
         });
     }

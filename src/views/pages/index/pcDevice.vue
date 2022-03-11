@@ -43,11 +43,9 @@ deleteTag(id,day){
     if(element.title){
     if(element.title===this.dataShow.title){
       const indexYM=this.$store.state.money.dataAll.indexOf(element)
-      console.log('indexYM'+indexYM);
       element.items.forEach(item=>{
         if(item.day===day){
           const indexDD=element.items.indexOf(item)
-          console.log('indexDD'+indexDD);
           item.list.forEach(el=>{
             if(el.id===id){
               if(this.dataAll.length===1 && element.items.length===1 && item.list.length===1){
@@ -57,7 +55,7 @@ deleteTag(id,day){
               }
               else if(this.dataAll.length>1 && element.items.length===1 && item.list.length===1){
                 this.$store.state.money.dataAll.splice(indexYM,1)
-                this.isSHowListPage=false
+                // this.isSHowListPage=false
                 return
               }else  if(this.dataAll.length===1 && element.items.length>1 && item.list.length===1){
                 this.$store.state.money.dataAll[0].items.splice(indexDD,1)

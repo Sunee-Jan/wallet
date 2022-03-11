@@ -7,7 +7,7 @@ export default{
        dataAll:JSON.parse(localStorage.getItem('m') ||`[{"title":"","items":[{"day":"","week":"","payAll":0,"incomeAll":0,"list":[{"id":"","icon":"","kind":"","amount":0}]}]}]`) ,
         dateShow:false,
         currentDate:new Date(),
-        titleTime:`${dayjs(new Date()).format('YYYY-MM')}`,
+        titleTime:`${dayjs(new Date()).format('YYYYMM')}`,
         showTile:0,//dataAll的第几项数据，打开应用默认打开最后一次记录的那个月
         monthPay:0,
         monthIncome:0,
@@ -17,8 +17,7 @@ export default{
     getters:{
       //默认首次进入页面展示的月份数据，默认为已记录的最新数据
       dataShow(state: { dataAll: { [x: string]: any }; showTile: string | number; titleTime: any }){
-        let showMonth=state.dataAll[state.showTile]
-        console.log('%%%%'+state.showTile);       
+        let showMonth=state.dataAll[state.showTile]   
        return showMonth
       },
     },
@@ -43,16 +42,18 @@ export default{
           state.monthPay += day.payAll
          })
            },
-      sortDataAll(state){
+           
+      sortDataAll(state: { dataAll: any[]; }){
         state.dataAll.forEach(lists=>{
-        lists.items.sort((a,b)=>{return b.day-a.day})
+        lists.items.sort((a: { day: number; },b: { day: number; })=>{return b.day-a.day})
             })
         state.dataAll.sort((a,b)=>{return b.title-a.title})
+        localStorage.setItem('m',JSON.stringify(state.dataAll))
           },
-      putLocalStorage(state){
+      putLocalStorage(state: { dataAll: any; }){
             localStorage.setItem('m',JSON.stringify(state.dataAll))
           },
       },
     actions: {
     }
-}
+}  

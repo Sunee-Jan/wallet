@@ -85,17 +85,18 @@ methods:{
   //开始时间
   handleEndDateConfirm () {
    this.calendarIsShow =false;//关闭日历
-   this.getYM=dayjs(this.currentDate).format('YYYY-MM-DD').slice(0,7)//获取年月
-   this.getD=dayjs(this.currentDate).format('YYYY-MM-DD').slice(8)//获取年日
-   this.getW=dayjs(this.currentDate).format('YYYY-MM-DD-d').slice(11)//获取星期  
-   this.$store.state.money.titleTime=dayjs(this.currentDate).format('YYYY-MM')
-  //  this.titleTime=dayjs(this.currentDate).format('YYYY-MM')
+   this.getYM=dayjs(this.currentDate).format('YYYYMM-DD').slice(0,6)//获取年月
+   this.getD=dayjs(this.currentDate).format('YYYYMM-DD').slice(7)//获取年日
+   this.getW=dayjs(this.currentDate).format('YYYYMM-DD-d').slice(10)//获取星期  
+   this.$store.state.money.titleTime=dayjs(this.currentDate).format('YYYYMM')
+   this.currentDate=new Date()
+  //  this.titleTime=dayjs(this.currentDate).format('YYYYMM')
   }, 
 },
 mounted(){
-   this.getYM=dayjs().format('YYYY-MM-DD').slice(0,7)
-   this.getD=dayjs().format('YYYY-MM-DD').slice(8)
-   this.getW=dayjs().format('YYYY-MM-DD-d').slice(11)
+   this.getYM=dayjs().format('YYYYMM-DD').slice(0,6)
+   this.getD=dayjs().format('YYYYMM-DD').slice(7)
+   this.getW=dayjs().format('YYYYMM-DD-d').slice(10)
 }
 }
 </script>

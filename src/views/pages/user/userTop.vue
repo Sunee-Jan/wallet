@@ -1,7 +1,7 @@
 <template>
   <header class="userInfo">
   <div class="admin">
-    <div class="user"><p class="logo">Hi</p><p class="username">小丸子</p></div>
+    <div class="user"><p class="logo">Hi</p><p class="username">小丸友</p></div>
     <div class="clock" @click="isClick"><Icon name="#clock" svg='clockIcon'/>打卡</div>
   </div>
     <div class="statical">
@@ -25,7 +25,15 @@ computed:{
   accountDays(){
     let days=0
     this.dataAll.forEach(element => {
+      if(element.items.length===1){
+        if(!element.items[0].day){
+          days=0
+        }else{
       days+=element.items.length
+      }
+      }else{
+      days+=element.items.length
+      }
     });
      return days
   },
@@ -33,7 +41,15 @@ computed:{
     let lists=0
     this.dataAll.forEach(element=>{
       element.items.forEach(item=>{
+        if(item.list.length===1){
+          if(!item.list[0].id){
+            lists=0
+          }else{
+           lists+=item.list.length
+          }
+        }else{
         lists+=item.list.length
+        }
       })
     })
     return lists
@@ -51,14 +67,14 @@ methods:{
   isClick(){
     let hasLocked=false
     this.lockDays.forEach(item=>{
-      if(item.date===dayjs().format('YYYY-MM-DD')){
+      if(item.date===dayjs().format('YYYYMM-DD')){
         alert('今天已经打过啦')
         hasLocked=true
       }
     })
     if(!hasLocked){
       let temp={}
-      temp.date=dayjs().format('YYYY-MM-DD')
+      temp.date=dayjs().format('YYYYMM-DD')
       temp.hasLock=true
       this.lockDays.push(temp)
       localStorage.setItem('lock',JSON.stringify(this.lockDays))

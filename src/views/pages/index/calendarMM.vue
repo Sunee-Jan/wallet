@@ -36,7 +36,7 @@ computed:{
       return this.$store.state.money.dateShow=val
     }
   },
-  //首页选择的日期（YYYY-MM）
+  //首页选择的日期（YYYYMM）
   titleTime:{
     get(){
       return this.$store.state.money.titleTime
@@ -113,8 +113,9 @@ methods:{
     //点击确认时间操作
   handleEndDateConfirm () {
    this.dateIsShow =false;
-   this.titleTime=dayjs(this.currentDate).format('YYYY-MM')
+   this.titleTime=dayjs(this.currentDate).format('YYYYMM')
    this.showAboutDataPage()
+   this.$store.state.money.currentDate=new Date()
   },
 }
 }

@@ -99,6 +99,8 @@ methods:{
    })
    if(!hasData){
      this.isSHowListPage=false
+     this.$store.state.money.monthPay=0
+     this.$store.state.money.monthIncome=0
      return
    }else{
      this.isSHowListPage=true

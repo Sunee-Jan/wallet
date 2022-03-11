@@ -2,19 +2,69 @@
   <header class="userInfo">
   <div class="admin">
     <div class="user"><p class="logo">Hi</p><p class="username">小丸子</p></div>
-    <div class="clock"><Icon name="#clock" svg='clockIcon'/>打卡</div>
+    <div class="clock" @click="isClick"><Icon name="#clock" svg='clockIcon'/>打卡</div>
   </div>
     <div class="statical">
-      <p class="continuous"><span>0</span>已连续打卡</p>
-      <p class="days"><span>0</span>记账总天数</p>
-      <p class="count"><span>0</span>记账总笔数</p>
+      <p class="continuous"><span>{{lockDays.length}}</span>已连续打卡</p>
+      <p class="days"><span>{{accountDays}}</span>记账总天数</p>
+      <p class="count"><span>{{accountLists}}</span>记账总笔数</p>
     </div>
  </header>
 </template>
 
 <script>
+var dayjs = require('dayjs')
+import { mapState, mapGetters, mapMutations} from 'vuex';
 export default {
-name:'UserTop'
+name:'UserTop',
+computed:{
+ ...mapState('money',['dataAll','dateShow','currentDate','titleTime','showTile','monthPay','monthIncome']),
+  lockDays(){
+
+  },
+  accountDays(){
+    let days=0
+    this.dataAll.forEach(element => {
+      days+=element.items.length
+    });
+     return days
+  },
+  accountLists(){
+    let lists=0
+    this.dataAll.forEach(element=>{
+      element.items.forEach(item=>{
+        lists+=item.list.length
+      })
+    })
+    return lists
+  },
+  lockDays:{
+    get(){
+     return this.$store.state.lock.lockDays
+    },
+    set(val){
+      this.$store.state.lock.lockDays=val
+    }
+  }
+},
+methods:{
+  isClick(){
+    let hasLocked=false
+    this.lockDays.forEach(item=>{
+      if(item.date===dayjs().format('YYYY-MM-DD')){
+        alert('今天已经打过啦')
+        hasLocked=true
+      }
+    })
+    if(!hasLocked){
+      let temp={}
+      temp.date=dayjs().format('YYYY-MM-DD')
+      temp.hasLock=true
+      this.lockDays.push(temp)
+      localStorage.setItem('lock',JSON.stringify(this.lockDays))
+    }
+  }
+}
 }
 </script>
 
@@ -100,6 +150,14 @@ name:'UserTop'
     }
   >.count{
       right: 0;
+  }
+}
+@media screen and (min-width: 800px){
+  .statical{
+    bottom: 0px;
+    >p{
+      height: 4.5rem;
+    }
   }
 }
 </style>

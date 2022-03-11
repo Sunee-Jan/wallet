@@ -26,6 +26,7 @@ methods:{
       $('svg').removeClass('backPink')
       $(e.target).addClass('backPink')
       this.$store.state.calculator.counterIsShow=true
+      this.$store.state.calculator.isToday=true
       this.$store.state.calculator.createData[0].items[0].list[0].icon=icon    
       this.$store.state.calculator.createData[0].items[0].list[0].kind=icon.slice(1)
       }

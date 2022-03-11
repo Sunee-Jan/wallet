@@ -3,6 +3,7 @@ export default{
     state: {
         counterIsShow:false,
         calendarIsShow:false,
+        isToday:true,
         currentDate: new Date(),
         createData:[{title:'YYYY-MM',items:[
             {day:'DD',week:'',payAll:0,incomeAll:0,list:[
@@ -18,4 +19,4 @@ export default{
     },
     actions: {
     }
-} 
+}  

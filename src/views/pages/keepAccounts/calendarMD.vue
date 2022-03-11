@@ -66,7 +66,7 @@ computed:{
     set(val){
       this.$store.state.calculator.currentDate=val
     }
-  }
+  },
 },
 methods:{
   setup() { //配置日历
@@ -88,7 +88,9 @@ methods:{
    this.getYM=dayjs(this.currentDate).format('YYYY-MM-DD').slice(0,7)//获取年月
    this.getD=dayjs(this.currentDate).format('YYYY-MM-DD').slice(8)//获取年日
    this.getW=dayjs(this.currentDate).format('YYYY-MM-DD-d').slice(11)//获取星期  
-  },
+   this.$store.state.money.titleTime=dayjs(this.currentDate).format('YYYY-MM')
+  //  this.titleTime=dayjs(this.currentDate).format('YYYY-MM')
+  }, 
 },
 mounted(){
    this.getYM=dayjs().format('YYYY-MM-DD').slice(0,7)

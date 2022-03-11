@@ -12,8 +12,8 @@
         <button @click='inputContent'>8</button>
         <button @click='inputContent'>9</button>
         <button @click="datePick">
-          <span class="calendar" v-show="!isToday"><Icon name="#日历" svg='menology'/>今天</span>
-          <span v-show="isToday" class="pickedDay">{{currentDate}}</span>
+          <span class="calendar" v-show="isToday"><Icon name="#日历" svg='menology'/>今天</span>
+          <span v-show="!isToday" class="pickedDay">{{currentDate}}</span>
         </button>
         <button @click='inputContent'>4</button>
         <button @click='inputContent'>5</button>
@@ -42,17 +42,26 @@ export default {
       return {
         note:'',
         number:'0.00',
-        isToday:false,//选择的日期是否为今天
-      }
+        // isToday:true,//选择的日期是否为今天
+       }
     },
     computed:{
     ...mapState('money',['isShowPayList']),
     //当前选择的时间
+    isToday:{
+      get(){
+        return this.$store.state.calculator.isToday
+      },
+      set(val){
+        this.$store.state.calculator.isToday=val
+      }
+    },
     currentDate(){
       if(dayjs(new Date()).format('YYYY/MM/DD')===dayjs(this.$store.state.calculator.currentDate).format('YYYY/MM/DD')){
-        this.isToday=false
-      }else{
         this.isToday=true
+        return dayjs(new Date()).format('YYYY/MM/DD')
+      }else{
+        this.isToday=false
         return dayjs(this.$store.state.calculator.currentDate).format('YYYY/MM/DD')
       }
     },
@@ -158,10 +167,18 @@ export default {
     set(val){
       this.$store.state.money.dataAll=val
     }
-  }
+  },
+  titleTime:{
+    get(){
+      return this.$store.state.money.titleTime
+    },
+    set(val){
+       return this.$store.state.money.titleTime=val
+    }
+  },
 },
 methods:{
-  ...mapMutations('money',{reCount:'reCount',sortDataAll:'sortDataAll'}),
+  ...mapMutations('money',{reCount:'reCount',sortDataAll:'sortDataAll',putLocalStorage:'putLocalStorage'}),
   //计算结果
   inputContent(e){
     if(this.number.length===8){return}
@@ -233,9 +250,9 @@ methods:{
   this.sortDataAll()
   },
   //将最新数据库存入localStorage中
-  putLocalStorage(){
-    localStorage.setItem('m',JSON.stringify(this.dataAll))
-  },
+  // putLocalStorage(){
+  //   localStorage.setItem('m',JSON.stringify(this.dataAll))
+  // },
   //断开calculator中crateData地址，以免影响dataAll
   changeCreateDataAddress(){
     this.$store.state.calculator.createData=[{title:'YYYY-MM',items:[
@@ -257,8 +274,17 @@ methods:{
   this.updateDataAll()
   this.putLocalStorage()
   this.changeCreateDataAddress()
-  this.$router.back()
-  },
+  //返回首页
+  this.$router.replace({
+        name:'index',
+      })
+  this.isToday=true
+  //首页月份跳转为数据库最后一条数据页面
+  this.$store.state.money.showTile=0
+  this.titleTime=this.dataAll[0].title
+  //完成后list默认回到pay页面
+  this.$store.state.money.isShowPayList=true
+}
 }
 }
 </script>

@@ -13,21 +13,13 @@
               <span>收入：{{data.incomeAll}}</span>
             </p>
           </h6>
-          <p id="move" class="list" v-for="list in data.list" :key="list.id" v-show="isWindow">
+          <p id="move" class="list" v-for="list in data.list" :key="list.id">
             <Icon :name="list.icon" svg='nav'/>
             <span class="detail">{{list.kind}}</span>
             <span class="pay">{{list.amount}}</span>
             <span class="delete" @click="deleteTag(list.id,data.day)">删除</span>
           </p>   
-          <p  id="move" class="list" v-for="list in data.list" :key="list.id" v-show="!isWindow" > 
-          <Icon :name="list.icon" svg='nav'/>
-          <van-swipe-cell >
-          <van-cell :border="false" :title="list.kind" :value="list.amount" />
-            <template #right>
-            <van-button square type="danger" text="删除" @click="deleteTag(list.id,data.day)"/>
-            </template>
-          </van-swipe-cell>    
-          </p>   
+
         </li>
     </ul>
 
@@ -36,13 +28,11 @@
 </template>
 
 <script>
-import { event } from 'jquery';
 import { mapState, mapGetters, mapMutations} from 'vuex';
 export default {
-name:"IndexBody",
+name:"PcDevice",
 data(){
   return{
-    isWindow:false
   }
 },
 methods:{
@@ -110,35 +100,9 @@ computed:{
   }
 },
 mounted(){
-  //判断设备是手机or平板or电脑
-  var os = function() {
-    var ua = navigator.userAgent,
-        isWindowsPhone = /(?:Windows Phone)/.test(ua),
-        isSymbian = /(?:SymbianOS)/.test(ua) || isWindowsPhone,
-        isAndroid = /(?:Android)/.test(ua),
-        isFireFox = /(?:Firefox)/.test(ua),
-        isChrome = /(?:Chrome|CriOS)/.test(ua),
-        isTablet = /(?:iPad|PlayBook)/.test(ua) || (isAndroid && !/(?:Mobile)/.test(ua)) || (isFireFox && /(?:Tablet)/.test(ua)),
-        isPhone = /(?:iPhone)/.test(ua) && !isTablet,
-        isPc = !isPhone && !isAndroid && !isSymbian;
-    return {
-        isTablet: isTablet,
-        isPhone: isPhone,
-        isAndroid: isAndroid,
-        isPc: isPc
-    };
-}()
-  if(os.isAndroid || os.isPhone){
-    this.isWindow=false
-  }else if(os.isTablet){
-    this.isWindow=false
-  }else if(os.isPc) {
-    this.isWindow=true
-} 
   this.sortDataAll()
   //判断初始化首页是否可以展示数据
   if(this.$store.state.money.dataAll[0].title){
-    console.log('11');
     this.isSHowListPage=true
   }
   this.reCount()
@@ -149,26 +113,6 @@ mounted(){
 <style lang='scss' scoped>
 @import '~@/assets/reset.scss';
 @import '~@/assets/helper.scss';
-.van-cell__title, .van-cell__value {
-    FONT-WEIGHT: 300;
-    flex: 1;
-    height: inherit;
-    line-height: 4rem;
-    font-size: 15px;
-    padding: 0 1rem;
-  }
-.van-swipe-cell {
-    position: relative;
-    overflow: hidden;
-    cursor: grab;
-    width: calc(100% - 13rem);
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
-    }
-.van-button {
-  width: 60px;
-  text-align: center;
-  margin-left: 1rem;
-}
 .list{
   background-color: #fff;
   >li{

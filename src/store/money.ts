@@ -18,13 +18,13 @@ export default{
       //默认首次进入页面展示的月份数据，默认为已记录的最新数据
       dataShow(state: { dataAll: { [x: string]: any }; showTile: string | number; titleTime: any }){
         let showMonth=state.dataAll[state.showTile]
+        console.log('%%%%'+state.showTile);       
        return showMonth
       },
     },
     mutations: { 
       //计算选择月份的总收入和总支出
       reCount(state: { dataAll: { [x: string]: { items: any[] } }; showTile: string | number; monthIncome: number; monthPay: number }){
-        console.log('111');
         state.dataAll[state.showTile].items.forEach((day: { incomeAll: number; payAll: number; list: any[] })=>{       
         day.incomeAll=0
         day.payAll=0
@@ -44,13 +44,15 @@ export default{
          })
            },
       sortDataAll(state){
-        console.log('来了');
         state.dataAll.forEach(lists=>{
         lists.items.sort((a,b)=>{return b.day-a.day})
             })
         state.dataAll.sort((a,b)=>{return b.title-a.title})
           },
-         },
+      putLocalStorage(state){
+            localStorage.setItem('m',JSON.stringify(state.dataAll))
+          },
+      },
     actions: {
     }
 }

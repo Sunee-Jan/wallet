@@ -11,7 +11,10 @@ import { DatetimePicker } from 'vant';
 import { SwipeCell } from 'vant';
 import { Button } from 'vant';
 import { Cell } from 'vant';
-// import { ConfigProvider } from 'vant';
+import { DropdownMenu, DropdownItem } from 'vant';
+import 'vant/lib/index.less';
+// import 'vant/lib/DropdownMenu/style/less';
+// import 'vant/lib/DropdownItem/style/less';
 
 
 const ECharts =require('echarts')
@@ -24,7 +27,8 @@ Vue.use(DatetimePicker);
 Vue.use( SwipeCell);
 Vue.use( Button);
 Vue.use( Cell);
-// Vue.use( ConfigProvider);
+Vue.use(DropdownMenu);
+Vue.use(DropdownItem);
 Vue.component('Nav',Nav);
 Vue.component('Lay',Lay);
 Vue.component('Icon', Icon);

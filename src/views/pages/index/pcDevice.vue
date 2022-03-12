@@ -54,8 +54,15 @@ deleteTag(id,day){
                 return
               }
               else if(this.dataAll.length>1 && element.items.length===1 && item.list.length===1){
+                // let temp={title:`${this.dataShow.title}`,items:[{day:"",week:"",payAll:0,incomeAll:0,list:[]}]}
+                let temp = this.dataShow.title
                 this.$store.state.money.dataAll.splice(indexYM,1)
-                // this.isSHowListPage=false
+                this.$nextTick(()=>{
+                this.$store.state.money.monthIncome=0
+                this.$store.state.money.monthPay=0
+                this.$store.state.money.titleTime=temp
+                })
+                this.isSHowListPage=false
                 return
               }else  if(this.dataAll.length===1 && element.items.length>1 && item.list.length===1){
                 this.$store.state.money.dataAll[0].items.splice(indexDD,1)
@@ -194,15 +201,15 @@ mounted(){
       height: 7rem;
       font-size: 1.5rem;
       >.pay{
-      line-height: 10vh;
+      line-height: 9vh;
       padding-right: 30px;
     }
     >.delete{
       display: none;
-      line-height: 12.5vh;
+      line-height: 11vh;
     }
     >.detail{
-      line-height: 10vh;
+      line-height: 9vh;
     }
     >.nav{
       line-height: 10vh;

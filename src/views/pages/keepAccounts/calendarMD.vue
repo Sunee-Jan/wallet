@@ -68,7 +68,7 @@ computed:{
     }
   },
 },
-methods:{
+methods:{ 
   setup() { //配置日历
     let minDate=this.minDate
     let maxDate=this.maxDate

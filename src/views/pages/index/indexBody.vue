@@ -53,11 +53,10 @@ deleteTag(id,day){
     if(element.title){
     if(element.title===this.dataShow.title){
       const indexYM=this.$store.state.money.dataAll.indexOf(element)
-      console.log('indexYM'+indexYM);
       element.items.forEach(item=>{
         if(item.day===day){
           const indexDD=element.items.indexOf(item)
-          console.log('indexDD'+indexDD);
+
           item.list.forEach(el=>{
             if(el.id===id){
               if(this.dataAll.length===1 && element.items.length===1 && item.list.length===1){
@@ -138,7 +137,7 @@ mounted(){
   this.sortDataAll()
   //判断初始化首页是否可以展示数据
   if(this.$store.state.money.dataAll[0].title){
-    console.log('11');
+
     this.isSHowListPage=true
   }
   this.reCount()

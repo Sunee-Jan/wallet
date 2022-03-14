@@ -13,8 +13,8 @@ import { Button } from 'vant';
 import { Cell } from 'vant';
 import { DropdownMenu, DropdownItem } from 'vant';
 import 'vant/lib/index.less';
-// import 'vant/lib/DropdownMenu/style/less';
-// import 'vant/lib/DropdownItem/style/less';
+import axios from "axios"
+
 
 
 const ECharts =require('echarts')
@@ -33,6 +33,7 @@ Vue.component('Nav',Nav);
 Vue.component('Lay',Lay);
 Vue.component('Icon', Icon);
 Vue.prototype.$echarts = ECharts;
+Vue.prototype.$axios = axios
 
 
 const vm=new Vue({

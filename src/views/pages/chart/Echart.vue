@@ -1,22 +1,58 @@
-<template>
+<template> 
   <div id="myChart"></div>
 </template>
 
 <script>
+import { mapState, mapGetters, mapMutations,mapActions} from 'vuex';
 export default {
 name:"EChart",
-  mounted(){
-    //根据设备自适应宽高
-    window.onresize = function() {
-    myChart.resize();
-    //
-  };
-    this.drawLine();
-  },
+data(){
+  return{
+    pay:[],
+    income:[],
+    day:[]
+  }
+},
+computed:{
+  ...mapState('chart',['getWChart']),
+},
+watch:{
+  getWChart:{
+    deep: true,
+    handler(){
+      this.payAll()
+      this.incomeAll()
+      this.dayType()
+      this.drawLine()
+    }
+  }
+},
   methods: {
+    ...mapMutations('chart',{weekChart:'weekChart'}),
+    payAll(){
+    let arr=[]
+    this.getWChart.forEach(element => {
+      arr.push(element.payTotalD)
+    });
+     this.pay=arr.slice(0)   
+  },
+  incomeAll(){
+    let arr=[]
+    this.getWChart.forEach(element => {
+      arr.push(element.incomeTotalD)
+    });
+    return this.income=arr.slice(0)
+  },
+  dayType(){
+    let arr=[]
+    this.getWChart.forEach(element => {
+      arr.push(element.weekDay)
+    return this.day=arr.slice(0)
+    });
+  },
     drawLine(){
         let myChart = this.$echarts.init(document.getElementById('myChart'))
-
+      
         myChart.setOption({
             // title: { text: '在Vue中使用echarts' },
             tooltip: {},
@@ -26,31 +62,45 @@ name:"EChart",
             top: 10,
            },
             xAxis: {
-                data: ['星期一','星期二','星期三','星期四','星期五','星期六','星期日'] 
+                data: this.day
             },
             yAxis: {},
             series: [{
                 name: '支出',
                 type: 'line',
                 lineStyle:{
-                  color:'pink',
+                  color:'skyblue',
                   width:1,
                 },
-                data: [`${this.money}`,"600","700","300","200","50",'0']
+                itemStyle:{
+                  color:'skyblue',
+                },
+                data: this.pay
             },
             {
                 name: '收入',
                 type: 'line',
                 lineStyle:{
                   width:1,
-                  color:'skyblue'
+                  color:'pink'
                 },
-                data: [`${this.money}`,"640","800","300","500","50",'20']
+                itemStyle:{
+                  color:'pink',
+                },
+                data: this.income
             }
             ],
         });
-    }
-  }
+    },
+  },
+      mounted(){
+      this.weekChart()
+    //根据设备自适应宽高
+    window.onresize = function() {
+    myChart.resize();
+  };
+    // this.drawLine();
+  },
 }
 </script>
 
@@ -61,8 +111,8 @@ body {
     width: 100%;
   }
 #myChart{
-  border: 1px solid red;
-  // margin-top: 10vh;
-//   height: 40vh;
+  top:0;
+  width: 100vw;
+  height: 30vh;
 }
 </style>

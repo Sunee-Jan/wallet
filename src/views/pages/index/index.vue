@@ -2,8 +2,7 @@
 <div class="timeWrap">
     <lay>
     <IndexTop/>
-    <!-- <IndexBody/> -->
-    <PcDevice v-if="isWindow"/>
+      <PcDevice v-if="isWindow"/>
     <MoveDevice  v-if="!isWindow"/>
   </lay>
   <CalendarMM/>
@@ -23,7 +22,7 @@ export default {
       isWindow:false
     }
   },
-  components: { IndexTop, IndexBody, CalendarMM, PcDevice, MoveDevice },
+  components: { IndexTop, CalendarMM, PcDevice, MoveDevice },
   name:'UserList',
   mounted(){
     var os = function() {
@@ -50,7 +49,7 @@ if(os.isAndroid || os.isPhone){
   }else if(os.isPc) {
     this.isWindow=true
 } 
-  }
+  },
 }
 </script>
 

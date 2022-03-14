@@ -3,7 +3,7 @@
   <ul  v-if="!isSHowListPage">
     <li>暂无数据</li>
   </ul>
-<ul class="list" v-if="isSHowListPage">
+<ul class="list" v-if="isSHowListPage" id="listShow">
         <li v-for="data in dataShow.items" :key="data.id">
           <h6>
             <span>{{dataShow.title.slice(5,7)}}月{{data.day}}日</span>
@@ -46,11 +46,9 @@ deleteTag(id,day){
     if(element.title){
     if(element.title===this.dataShow.title){
       const indexYM=this.$store.state.money.dataAll.indexOf(element)
-      console.log('indexYM'+indexYM);
       element.items.forEach(item=>{
         if(item.day===day){
           const indexDD=element.items.indexOf(item)
-          console.log('indexDD'+indexDD);
           item.list.forEach(el=>{
             if(el.id===id){
               if(this.dataAll.length===1 && element.items.length===1 && item.list.length===1){
@@ -122,6 +120,14 @@ mounted(){
 <style lang='scss' scoped>
 @import '~@/assets/reset.scss';
 @import '~@/assets/helper.scss';
+#listShow{
+  height: calc(100vh - 10.8rem - 8vh);
+  overflow: scroll;
+  // border:1px solid;
+}
+#listShow::-webkit-scrollbar {
+  display: none;
+}
 .van-cell{
   padding:1rem 1.5rem 1rem 1rem;
 }

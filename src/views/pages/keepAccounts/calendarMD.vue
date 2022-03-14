@@ -89,8 +89,6 @@ methods:{
    this.getD=dayjs(this.currentDate).format('YYYYMM-DD').slice(7)//获取年日
    this.getW=dayjs(this.currentDate).format('YYYYMM-DD-d').slice(10)//获取星期  
    this.$store.state.money.titleTime=dayjs(this.currentDate).format('YYYYMM')
-   this.currentDate=new Date()
-  //  this.titleTime=dayjs(this.currentDate).format('YYYYMM')
   }, 
 },
 mounted(){

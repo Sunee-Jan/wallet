@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import money from './money';
 import calculator from './calculator';
 import lock from './lock';
+import chart from './chart';
 
 Vue.use(Vuex)
 
@@ -11,6 +12,7 @@ export default new Vuex.Store({
   modules:{
     money,
     calculator,
-    lock
+    chart,
+    lock,
 }
 })

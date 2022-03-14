@@ -19,8 +19,10 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations} from 'vuex';
+import { mapState, mapGetters, mapMutations,mapActions} from 'vuex';
 var dayjs = require('dayjs')
+// var duration = require('dayjs/plugin/duration')
+// dayjs.extend(duration)
 export default {
   data() {
       return {
@@ -44,8 +46,13 @@ chooseTime(){
           this.$store.state.money.dateShow=true;
         },
   ...mapMutations('money',{reCount:'reCount'}),
+   ...mapActions('chart',{ getWeekData:' getWeekData'}),
+    ...mapActions('chart',{ getWeekData:'getWeekData'}),
 },
 mounted(){
+  // this.$store.dispatch('chart/getWeekData')
+  // this.JIA(null,{ root: true } )
+  // console.log('$$$'+dayjs().daysInMonth());
   if(this.dataShow.title){
     this.titleTime=this.dataShow.title
   }

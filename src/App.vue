@@ -1,6 +1,8 @@
 <template>
   <div id="app" @click="changeShowDate">
+    <!-- <keep-alive include="Graph"> -->
     <router-view/>
+    <!-- </keep-alive> -->
   </div>
 </template>
 <script>
@@ -10,11 +12,12 @@ export default {
   methods:{
     changeShowDate(){
       if(this.$store.state.dateShow){
-        this.$store.state.dateShow=false
+        // this.$store.state.dateShow=false
         return
       }      
     }
-  }
+  },
+
 }
 </script>
 

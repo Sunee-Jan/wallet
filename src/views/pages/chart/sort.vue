@@ -1,75 +1,104 @@
 <template>
-  <div id="mySort"></div>
+  <div id="mySort">
+    <p v-show="!hasData">还没记录，赶快记一笔吧</p>
+    <p id="move" class="list" v-for="(list,index) in getRank" :key="index" v-show="hasData">
+            <Icon :name="list.icon" svg='nav'/>
+            <span class="right">
+            <span class="detail">{{list.icon.slice(1)}} &nbsp;{{list.percent}}%</span>
+            <span class="amount">{{list.amount}}</span>
+            <span class="bar" :style="barWith(list.percent)"></span>
+            </span>
+    </p> 
+  </div>
 </template>
 
 <script>
+import { mapState, mapGetters, mapMutations,mapActions} from 'vuex';
 export default {
 name:'Sort',
-  data () {
+  data() {
     return {
-          money:100,
-      dataW:[],
-      dataM:[],
-      dataY:[]
+      // lists:[1,2,3,4,5,6,7,8,11,1,1,1,1,1,1,1,,1,1,1],
+      // barWith:'width:50%'
     }
+  },
+  computed:{
+   ...mapState('chart',['getRank','hasData']),
+  },
+  methods:{
+    ...mapMutations('chart',{Rank:'Rank',SotRank:'SotRank'}),
+    barWith(item){
+     return `width:${item}%`
+   },
   },
   mounted(){
-    //根据设备自适应宽高
-    window.onresize= function() {
-    mySort.resize();
-    //
-  };
-    this.drawLine();
-  },
-  methods: {
-    drawLine(){
-        let mySort = this.$echarts.init(document.getElementById('mySort'))
+    this.Rank()
+    this.SotRank()
 
-        mySort.setOption({
-            // title: { text: '在Vue中使用echarts' },
-            tooltip: {},
-            legend: {
-            // orient: 'vertical',
-            right: 10,
-            top: 10,
-           },
-            yAxis: {
-                data: ['星期一','星期二','星期三','星期四','星期五','星期六','星期日'] 
-            },
-            xAxis: {},
-            series: [{
-                name: '支出',
-                type: 'bar',
-                 axisLine: {
-                  lineStyle: {
-                    type: 'dashed',
-                    color:'red',
-                    width:20,
-                  }
-                },
-                itemStyle:{
-                  color:'pink',
-                  width:1,
-                },
-                data: [`${this.money}`,"600","700","300","200","50",'0']
-            }
-            ],
-        });
-    }
   }
 }
 </script>
 
 <style lang='scss' scoped>
+@import '~@/assets/reset.scss';
+@import '~@/assets/helper.scss';
 #mySort,
 html,
 body {
     width: 100%;
   }
 #mySort{
- border: 1px solid;
- position: fixed;
- bottom: 10vh   ;
-  height: 40vh;
+  height: calc(100vh - 38vh - 96px);
+  overflow: scroll;
 }
+#mySort::-webkit-scrollbar {
+  display: none;
+}
+.list{
+    display: flex;
+    height: 6rem;
+    font-size: 1.5rem;
+    font-weight: 300;
+    padding: 1.2rem 0 0 1.5rem;
+    padding-right: 0;
+    margin-top:2px;
+    >.nav{
+      margin-right: 1.8rem;
+      width: 3.7rem;
+      height: 3.7rem;  
+      padding: 6px; 
+      border-radius: 30%;
+      color:$font-color;
+      background-color: $main-color;
+      // background-color: #eeee;
+      // color: pink;
+    }
+    >.right{
+       position:relative;
+      width: calc(100vw - 5.9rem);
+      margin-right: 1.5rem;
+      // height: 3.7rem;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+      >.detail{
+      float: left;    
+    }
+    >.amount{
+      float: right;
+      line-height: 2rem;
+      flex-grow: 1;
+      text-align: right;
+      font-size: 1.5rem;
+    }
+    >.bar{
+      display: block;
+      content: "";
+      position:absolute;
+      bottom: 2rem;
+      // width: 80%;
+      height: .6rem;
+      background-color: pink;
+      border-radius: .3rem;
+    }
+    }
+  }
 </style>

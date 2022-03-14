@@ -3,7 +3,7 @@ var dayjs = require('dayjs')
 
 export default{
     namespaced: true,
-    state: {
+    state: { 
        dataAll:JSON.parse(localStorage.getItem('m') ||`[{"title":"","items":[{"day":"","week":"","payAll":0,"incomeAll":0,"list":[{"id":"","icon":"","kind":"","amount":0}]}]}]`) ,
         dateShow:false,
         currentDate:new Date(),

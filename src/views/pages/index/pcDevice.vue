@@ -3,7 +3,7 @@
   <ul  v-if="!isSHowListPage">
     <li>暂无数据</li>
   </ul>
-<ul class="list" v-if="isSHowListPage">
+<ul class="list" v-if="isSHowListPage" id="listShow">
         <li v-for="data in dataShow.items" :key="data.id">
           <h6>
             <span>{{dataShow.title.slice(5,7)}}月{{data.day}}日</span>
@@ -118,6 +118,14 @@ mounted(){
 <style lang='scss' scoped>
 @import '~@/assets/reset.scss';
 @import '~@/assets/helper.scss';
+#listShow{
+  height: calc(100vh - 10.8rem - 8vh);
+  overflow: scroll;
+  // border:1px solid;
+}
+#listShow::-webkit-scrollbar {
+  display: none;
+}
 .list{
   background-color: #fff;
   >li{

@@ -179,6 +179,7 @@ export default {
 },
 methods:{
   ...mapMutations('money',{reCount:'reCount',sortDataAll:'sortDataAll',putLocalStorage:'putLocalStorage'}),
+  ...mapMutations('chart',{weekChart:'weekChart',Rank:'Rank',SotRank:'SotRank'}),
   //计算结果
   inputContent(e){
     if(this.number.length===8){return}
@@ -280,6 +281,9 @@ methods:{
   this.toEmptyDataAll()
   this.updateDataAll()
   this.changeCreateDataAddress()
+  this.weekChart()
+  this.Rank()
+  this.SotRank()
   //返回首页
   this.$router.replace({
         name:'index',

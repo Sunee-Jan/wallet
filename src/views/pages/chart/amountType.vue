@@ -12,21 +12,41 @@ export default {
     name:'AmountType',
     data() {
     return {
-      value1: 0,
+      value1: true,
       value2: 'a',
       option: [
-        { text: '支出排行', value: 0 },
-        { text: '收入排行', value: 1 },
+        { text: '支出排行', value: true },
+        { text: '收入排行', value: false },
       ],
     };
   },
+computed:{
+  ...mapState('chart',['isPaySort']),
+  isPaySort:{
+    get(){
+     return this.$store.state.chart.isPaySort
+    },
+    set(val){
+      this.$store.state.chart.isPaySort=val
+    }
+  }
+},
 methods:{
-    ...mapMutations('chart',{weekChart:'weekChart',Rank:'Rank',SotRank:'SotRank'}),
+    ...mapMutations('chart',{getChartData:'getChartData',Rank:'Rank',SotRank:'SotRank'}),
   isPay(){
+    console.log(this.value1);
     this.$store.state.chart.isPay=!this.$store.state.chart.isPay
+    this.isPaySort=!this.isPaySort
     this.Rank()
     this.SotRank()
   }
+},
+mounted(){
+  this.value1=this.isPaySort
+},
+beforeDestroy(){
+  // this.value1=true
+  // this.$store.state.chart.isPay=true
 }
 }
 </script>

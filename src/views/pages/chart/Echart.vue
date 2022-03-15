@@ -14,10 +14,10 @@ data(){
   }
 },
 computed:{
-  ...mapState('chart',['getWChart']),
+  ...mapState('chart',['getChat']),
 },
 watch:{
-  getWChart:{
+  getChat:{
     deep: true,
     handler(){
       this.payAll()
@@ -28,25 +28,25 @@ watch:{
   }
 },
   methods: {
-    ...mapMutations('chart',{weekChart:'weekChart'}),
+    ...mapMutations('chart',{getChartData:'getChartData'}),
     payAll(){
     let arr=[]
-    this.getWChart.forEach(element => {
+    this.getChat.forEach(element => {
       arr.push(element.payTotalD)
     });
      this.pay=arr.slice(0)   
   },
   incomeAll(){
     let arr=[]
-    this.getWChart.forEach(element => {
+    this.getChat.forEach(element => {
       arr.push(element.incomeTotalD)
     });
     return this.income=arr.slice(0)
   },
   dayType(){
     let arr=[]
-    this.getWChart.forEach(element => {
-      arr.push(element.weekDay)
+    this.getChat.forEach(element => {
+      arr.push(element.timeType)
     return this.day=arr.slice(0)
     });
   },
@@ -94,7 +94,8 @@ watch:{
     },
   },
       mounted(){
-      this.weekChart()
+        this.drawLine()
+      // this.getChartData()
     //根据设备自适应宽高
     window.onresize = function() {
     myChart.resize();

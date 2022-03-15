@@ -2,7 +2,7 @@
 <div class="wrap">
  <van-dropdown-menu  >
      <van-dropdown-item v-model="value1" :options="option1"  @change='chooseWeek(value1)'/>
-     <van-dropdown-item v-model="value2" :options="option2" />
+     <van-dropdown-item v-model="value2" :options="option2"  @closed='chooseMonth(value2)'/>
      <!-- <van-dropdown-item v-model="value3" :options="option3" /> -->
     </van-dropdown-menu>
 </div>
@@ -16,7 +16,7 @@ export default {
      data() {
     return {
       value1: '本周',
-      value2: 'a',
+      value2: '本月',
       value3: '一',
       option1: [
         { text: '本周', value:'本周'},
@@ -25,9 +25,10 @@ export default {
         { text: '前3周', value: '前三周' },
       ],
       option2: [
-        { text: '本月', value: 'a' },
-        { text: '上个月', value: 'b' },
-        { text: '前2月', value: 'c' },
+        { text: '本月', value: '本月' },
+        { text: '上个月', value: '上个月' },
+        { text: '前2月', value: '前2月' },
+        { text: '前3月', value: '前3月' },
       ],
       // option3: [
       //   { text: '本年', value: '一' },
@@ -37,53 +38,69 @@ export default {
     };
   },
 methods:{
-  ...mapMutations('chart',{weekChart:'weekChart',Rank:'Rank',SotRank:'SotRank'}),
+  ...mapMutations('chart',{getChartData:'getChartData',Rank:'Rank',SotRank:'SotRank'}),
   currentWeek(){
     let dayBefore=dayjs().$W-1
     let thisWeekFrom=''
-      let thisWeekTo=''
+    let thisWeekTo=''
       if(dayBefore>=0){
         thisWeekFrom=dayjs().subtract(dayBefore, 'day')
         thisWeekTo=dayjs(thisWeekFrom).add(6,'day')
-      }else if(dayBefore<0){
+      }else{
         thisWeekFrom=dayjs().subtract(6, 'day')
         thisWeekTo=dayjs()
       }
       return [thisWeekFrom,thisWeekTo]
   },
+  getWeekRange(n){
+  this.$store.state.chart.TimeRange[0]=dayjs(this. currentWeek()[0]).subtract(n, 'week')
+  this.$store.state.chart.TimeRange[1]=dayjs(this. currentWeek()[1]).subtract(n, 'week')
+  },
   chooseWeek(val){
-      let dateFrom=0
-      let dateTo=0
     if(val==='本周'){
-      dateFrom=this. currentWeek()[0]
-      dateTo=this. currentWeek()[1]
+    this.getWeekRange(0)
     }
     if(val==='上周'){
-      dateFrom=dayjs(this. currentWeek()[0]).subtract(1, 'week')
-      dateTo=dayjs(this. currentWeek()[1]).subtract(1, 'week')
+    this.getWeekRange(1)
     }
     if(val==='前2周'){
-      dateFrom=dayjs(this. currentWeek()[0]).subtract(2, 'week')
-      dateTo=dayjs(this. currentWeek()[1]).subtract(2, 'week')
+    this.getWeekRange(2)
     }
     if(val==='前三周'){
-      dateFrom=dayjs(this. currentWeek()[0]).subtract(3, 'week')
-      dateTo=dayjs(this. currentWeek()[1]).subtract(3, 'week')
+    this.getWeekRange(3)
     }
-     this.$store.state.chart.getWTime[0]=dateFrom
-    this.$store.state.chart.getWTime[1]=dateTo
-    this.weekChart()
+    this.getChartData()
     this.Rank()
     this.SotRank()
-        return [dateFrom,dateTo]
   },
+  getMonthRange(n){
+    this.$store.state.chart.TimeRange[0]=dayjs().startOf('month').subtract(n, 'month')
+    this.$store.state.chart.TimeRange[1]=dayjs().endOf('month').subtract(n, 'month')
+  },
+  chooseMonth(val){
+    if(val==='本月'){
+    this.getMonthRange(0)
+    }
+    if(val==='上个月'){
+    this.getMonthRange(1)
+    }
+    if(val==='前2月'){
+    this.getMonthRange(2)
+    }
+    if(val==='前3月'){
+    this.getMonthRange(3)
+    }
+    this.getChartData()
+    this.Rank()
+    this.SotRank()
+  }
 },
 mounted(){
-//  console.log('top');
+  this.chooseWeek('本周')
 },
 beforeDestroy(){
- this.$store.state.chart.getWTime[0]=this.currentWeek()[0]
- this.$store.state.chart.getWTime[1]=this.currentWeek()[1]
+ this.$store.state.chart.TimeRange[0]=this.currentWeek()[0]
+ this.$store.state.chart.TimeRange[1]=this.currentWeek()[1]
 }
 }
 </script>

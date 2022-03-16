@@ -6,7 +6,10 @@ import chart from '../views/pages/chart/chart.vue'
 import keepAccount from '../views/pages/keepAccounts/keepAccounts.vue'
 import calculator from '../views/pages/keepAccounts/calculator.vue'
 import mood from '../views/pages/mood/mood.vue'
+import write from '../views/pages/mood/write.vue'
+import writing from '../views/pages/mood/writing.vue'
 import page404 from '../views/pages/404.vue'
+
 
 
 Vue.use(VueRouter)
@@ -39,8 +42,24 @@ const routes: Array<RouteConfig> = [
   {
     path: '/mood',
     name: 'mood',
-    component: mood
+    component: mood,
+    props(route){
+      return{hasData:route.query.hasData}
+    }
   },
+  {
+     path:'/write',
+     name:'PickDate',
+     component:write
+  },
+  {
+    path:'/writing',
+    name:'ToWrite',
+    component:writing,
+    props(route){
+      return {baseInfo:route.params}
+    }
+ },
   {
     path: '/userHome',
     name: 'userHome',

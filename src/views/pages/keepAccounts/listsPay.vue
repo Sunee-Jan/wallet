@@ -22,7 +22,8 @@ computed:{
   ...mapState('calculator',['counterIsShow']),
 },
 methods:{
-      pickIcon(e,icon){
+  pickIcon(e,icon){
+    console.log('点击了');
       $('svg').removeClass('backPink')
       $(e.target).addClass('backPink')
       this.$store.state.calculator.counterIsShow=true
@@ -31,7 +32,8 @@ methods:{
       this.$store.state.calculator.createData[0].items[0].list[0].icon=icon    
       this.$store.state.calculator.createData[0].items[0].list[0].kind=icon.slice(1)
       }
-}
+},
+
 }
 </script>
 

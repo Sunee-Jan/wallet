@@ -12,20 +12,34 @@
       <Icon name="#add" svg='navMid'/>
       记一笔
       </router-link>    
-      <router-link to="/mood" active-class='selected' class='aside'>
+      <router-link :to="`/mood?hasData=${hasData}`" active-class='selected' class='aside'>
       <Icon name="#coffee" svg='nav'/>
       心情
       </router-link>    
       <router-link to="/userHome" active-class='selected' class='aside'>
       <Icon name="#mine" svg='nav'/>
-      我的
+      我的 
       </router-link> 
   </div>
 </template>
 
 <script>
+import { mount } from '@vue/test-utils'
 export default {
 name:'NavFloor',
+data(){
+  return{
+    hasData:''
+  }
+},
+methods:{
+  isHasData(){
+  this.hasData=val
+  }
+},
+mounted() {
+  this.$bus.$on('hasData',this.iaHasData)
+},
 }
 </script>
 

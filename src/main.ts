@@ -11,6 +11,7 @@ import { DatetimePicker } from 'vant';
 import { SwipeCell } from 'vant';
 import { Button } from 'vant';
 import { Cell } from 'vant';
+import { Calendar } from 'vant';
 import { DropdownMenu, DropdownItem } from 'vant';
 import 'vant/lib/index.less';
 import axios from "axios"
@@ -22,11 +23,13 @@ const ECharts =require('echarts')
 
 
 Vue.config.productionTip = false
+Vue.config.devtools = true;
 Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
 Vue.use(DatetimePicker);
 Vue.use( SwipeCell);
 Vue.use( Button);
-Vue.use( Cell);
+Vue.use( Cell );
+Vue.use(Calendar);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
 Vue.component('Nav',Nav);
@@ -39,6 +42,9 @@ Vue.prototype.$axios = axios
 const vm=new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  beforeCreate(){
+    Vue.prototype.$bus=this
+  }
 }).$mount('#app')
 console.log(vm);

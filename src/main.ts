@@ -12,7 +12,10 @@ import { SwipeCell } from 'vant';
 import { Button } from 'vant';
 import { Cell } from 'vant';
 import { Calendar } from 'vant';
+import { Card } from 'vant';
 import { DropdownMenu, DropdownItem } from 'vant';
+import { Dialog } from 'vant';
+
 import 'vant/lib/index.less';
 import axios from "axios"
 
@@ -30,6 +33,8 @@ Vue.use( SwipeCell);
 Vue.use( Button);
 Vue.use( Cell );
 Vue.use(Calendar);
+Vue.use(Card);
+Vue.use(Dialog);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
 Vue.component('Nav',Nav);

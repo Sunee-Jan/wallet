@@ -5,7 +5,7 @@
       <p class="title"><em>选择要记录的日期吧</em></p>
       <p class="time" @click="chooseDay">
           <span class="timeTile"><Icon name="#日历" svg='calendar'/>
-          <u>{{showDate}}</u>
+          <u>{{showDate1}}</u>
           <Icon name="#编辑" svg='edit'/>
           </span>
           <span class="weather">“这天天气如何呢”</span>
@@ -29,21 +29,28 @@ name:'UserWrite',
 data() {
     return {
      icons:['#晴','#多云','#阴','#雨','#雷','#雪'],
-     showDate:dayjs().format('YYYY年MM月DD日'),
+     showDate:dayjs().format('YYYYMMDD'),
      chosenIcon:''
         }
     },
 components: { MMDD },
+computed:{
+    showDate1(){
+        return dayjs(this.showDate).format('YYYY年MM月DD日')
+    }
+},
 methods:{
 back(){
-    this.$router.back()
+    this.$router.replace({
+        name:'mood'
+    })
         },
 chooseDay(){
     this.$bus.$emit('isShow',true)
     console.log('111');
         },
 Date(val){
-    this.showDate=dayjs(val).format('YYYY年MM月DD日')
+    this.showDate=dayjs(val).format('YYYYMMDD')
 },
 chooseWeather(e,icon){
     $('svg').removeClass('active')

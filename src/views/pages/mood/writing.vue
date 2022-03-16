@@ -10,28 +10,35 @@
 </template>
 
 <script>
+import { nanoid } from 'nanoid';
 export default {
 name:'StartWrite',
 data() {
   return {
-    text:''
+    text:'',
+    diaryList:JSON.parse(localStorage.getItem('diary')) || []
   }
 },
 props:['baseInfo'],
 methods:{
 back(){
   this.$router.back() 
-  }
-},
+  },
 keepData(){
-  this.$router.push({
-    name:'',
-    params:{
+  let temp={
+      id:nanoid(),
       date:this.baseInfo.time,
       icon:this.baseInfo.icon,
-      // text:
+      text:this.text
     }
+  this.diaryList.push(temp)
+  localStorage.setItem('diary',JSON.stringify(this.diaryList))
+
+  this.$router.replace({
+    name:'showList',
   })
+
+}
 },
 mounted() {
   $('textarea')[0].focus()

@@ -8,6 +8,7 @@ import calculator from '../views/pages/keepAccounts/calculator.vue'
 import mood from '../views/pages/mood/mood.vue'
 import write from '../views/pages/mood/write.vue'
 import writing from '../views/pages/mood/writing.vue'
+import showLIst from '../views/pages/mood/showList.vue'
 import page404 from '../views/pages/404.vue'
 
 
@@ -52,6 +53,11 @@ const routes: Array<RouteConfig> = [
      name:'PickDate',
      component:write
   },
+  {
+    path:'/showLIst',
+    name:'showList',
+    component:showLIst
+ },
   {
     path:'/writing',
     name:'ToWrite',

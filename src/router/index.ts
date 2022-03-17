@@ -9,6 +9,7 @@ import mood from '../views/pages/mood/mood.vue'
 import write from '../views/pages/mood/write.vue'
 import writing from '../views/pages/mood/writing.vue'
 import showLIst from '../views/pages/mood/showList.vue'
+import article from '../views/pages/mood/article.vue'
 import page404 from '../views/pages/404.vue'
 
 
@@ -44,9 +45,9 @@ const routes: Array<RouteConfig> = [
     path: '/mood',
     name: 'mood',
     component: mood,
-    props(route){
-      return{hasData:route.query.hasData}
-    }
+    // props(route){
+    //   return{hasData:route.query.hasData}
+    // }
   },
   {
      path:'/write',
@@ -66,6 +67,14 @@ const routes: Array<RouteConfig> = [
       return {baseInfo:route.params}
     }
  },
+ {
+  path:'/article',
+  name:'Article',
+  component:article,
+  props(route){
+    return {article:route.params}
+  }
+},
   {
     path: '/userHome',
     name: 'userHome',

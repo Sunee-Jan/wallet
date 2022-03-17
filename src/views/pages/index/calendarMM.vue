@@ -123,6 +123,7 @@ methods:{
 
 <style lang='scss' scoped>
 .timeCheck{
+  box-shadow: 1px 0 1px rgba(0, 0, 0, 0.2);
   position: fixed;
   bottom: 0;
   width: 100vw;

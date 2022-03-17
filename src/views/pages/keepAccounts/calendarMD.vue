@@ -102,6 +102,7 @@ mounted(){
 <style lang="scss" scoped>
 .timeCheck{
   position: fixed;
+  box-shadow: 1px 0 1px rgba(0, 0, 0, 0.2);
   bottom: 0;
   width: 100vw;
 }

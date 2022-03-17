@@ -5,7 +5,7 @@
       <p class="diary">日记</p>
       <button class="showLIst" @click="keepData">保存</button>
     </header>
-    <textarea name="" id="" cols="30" rows="10" v-model="text">你好</textarea>
+    <textarea v-model="text">你好</textarea>
   </div>
 </template>
 
@@ -33,16 +33,15 @@ keepData(){
     }
   this.diaryList.push(temp)
   localStorage.setItem('diary',JSON.stringify(this.diaryList))
-
+  this.$bus.$emit('noData',true)
   this.$router.replace({
-    name:'showList',
+    name:'mood',
   })
 
 }
 },
 mounted() {
   $('textarea')[0].focus()
-    console.log(this.baseInfo);
 },
 }
 </script>

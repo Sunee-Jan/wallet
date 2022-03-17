@@ -12,7 +12,7 @@
       <Icon name="#add" svg='navMid'/>
       记一笔
       </router-link>    
-      <router-link :to="`/mood?hasData=${hasData}`" active-class='selected' class='aside'>
+      <router-link to="/mood" active-class='selected' class='aside'>
       <Icon name="#coffee" svg='nav'/>
       心情
       </router-link>    
@@ -29,16 +29,16 @@ export default {
 name:'NavFloor',
 data(){
   return{
-    hasData:''
+    
   }
 },
 methods:{
-  isHasData(){
-  this.hasData=val
-  }
+  // isHasData(){
+  // this.hasData=val
+  // }
 },
 mounted() {
-  this.$bus.$on('hasData',this.iaHasData)
+  // this.$bus.$on('hasData',this.iaHasData)
 },
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
 <div class="showPart">
-  <ul  v-if="!isSHowListPage">
-    <li>暂无数据</li>
+  <ul  v-if="!isSHowListPage" class="none">
+    <li><Icon name="#无数据" svg='noData'/></li>
   </ul>
 <ul class="list" v-if="isSHowListPage" id="listShow">
         <li v-for="data in dataShow.items" :key="data.id">
@@ -120,6 +120,16 @@ mounted(){
 <style lang='scss' scoped>
 @import '~@/assets/reset.scss';
 @import '~@/assets/helper.scss';
+.none{
+  position: relative;
+  height: calc(100vh - 10.8rem - 8vh);
+  >li .noData{
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-90%);
+  }
+}
 #listShow{
   height: calc(100vh - 10.8rem - 8vh);
   overflow: scroll;

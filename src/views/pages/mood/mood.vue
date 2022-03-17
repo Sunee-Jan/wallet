@@ -16,12 +16,25 @@ import Title from './Title.vue'
 import Write from './write.vue'
 export default {
   name:'UserMood',
-  components: { Greet, Write, ShowList, Title },
-  props:['hasData'],
-  computed:{
-    isShow(){
-      return Boolean(this._props.hasData)
+  data() {
+    return {
+      isShow:false,
     }
+  },
+  hasData:JSON.parse(localStorage.getItem('diary')),
+  components: { Greet, Write, ShowList, Title },
+  methods: {
+    noData(val){
+      this.isShow=val
+    }
+  },
+  mounted() {
+    console.log(this.isShow);
+    this.$bus.$on('noData',this.noData)
+    if(JSON.parse(localStorage.getItem('diary')) && localStorage.getItem('diary')!=="[]"){
+      this.isShow=true
+    }
+    console.log(this.isShow);
   },
 }
 </script>

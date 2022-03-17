@@ -18,7 +18,7 @@ import { Dialog } from 'vant';
 
 import 'vant/lib/index.less';
 import axios from "axios"
-
+import { Divider } from 'element-ui'
 
 
 const ECharts =require('echarts')

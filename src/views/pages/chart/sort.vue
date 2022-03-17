@@ -1,6 +1,6 @@
 <template>
   <div id="mySort">
-    <p v-show="!hasData">还没记录，赶快记一笔吧</p>
+    <p v-show="!hasData"><Icon name="#无数据" svg='noData'/></p>
     <p id="move" class="list" v-for="(list,index) in getRank" :key="index" v-show="hasData">
             <Icon :name="list.icon" svg='nav'/>
             <span class="right">
@@ -48,8 +48,15 @@ body {
     width: 100%;
   }
 #mySort{
+  position: relative;
   height: calc(100vh - 38vh - 96px);
   overflow: scroll;
+  >p .noData{
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-70%);
+  }
 }
 #mySort::-webkit-scrollbar {
   display: none;
